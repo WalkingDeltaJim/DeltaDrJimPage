@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>吉米大夫-載而塔坐堂常常逛的巿集</title>
+<title>吉米大夫-載而塔坐堂常用網站</title>
 <style>
 :root {
-    --bg-1: #eef2ff; --bg-2: #f7f9fc; --bg-3: #e0f2fe;
-    --ink: #172033; --ink-soft: #5b6472; --ink-faint: #8b93a1;
-    --surface: rgba(255, 255, 255, 0.95); --surface-border: rgba(226, 232, 240, 0.9);
-    --line: #e6eaf1; --brand: #2563eb; --brand-dark: #111827;
+    --bg-1: #e6f7ea; --bg-2: #f6faf7; --bg-3: #d5f0da;
+    --ink: #16241c; --ink-soft: #4b6354; --ink-faint: #7c9083;
+    --surface: rgba(255, 255, 255, 0.95); --surface-border: rgba(206, 233, 213, 0.9);
+    --line: #dcefe0; --brand: #16a34a; --brand-dark: #14532d;
     --shadow-sm: 0 6px 18px rgba(15, 23, 42, 0.06); --shadow-md: 0 14px 34px rgba(15, 23, 42, 0.10);
     --radius-md: 16px; --radius-lg: 20px;
-    --accent-ai: #2563eb; --accent-tools: #7c3aed; --accent-med: #0d9488;
+    --accent-ai: #16a34a; --accent-tools: #65a30d; --accent-med: #15803d;
 }
 * { box-sizing: border-box; }
 body {
@@ -51,7 +51,7 @@ h1 { margin: 12px 0 4px; font-size: 26px; font-weight: 800; }
     color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; transition: opacity 0.15s;
 }
 .btn:hover { opacity: 0.9; }
-.btn-secondary { background: #64748b; }
+.btn-secondary { background: #4b7a5c; }
 main { width: min(1180px, 94%); margin: 0 auto 60px; }
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; min-height: 80px; }
 /* Interactive Cards (link-type, framework of A) */
@@ -63,20 +63,21 @@ main { width: min(1180px, 94%); margin: 0 auto 60px; }
 }
 .card:active { cursor: grabbing; }
 .card.dragging { opacity: 0.4; transform: scale(0.98); }
+.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--brand); }
 .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
 .icon {
     width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center;
-    background: #eff6ff; color: var(--brand); font-size: 16px; font-weight: 800; flex-shrink: 0;
+    background: #e6f7ea; color: var(--brand); font-size: 16px; font-weight: 800; flex-shrink: 0;
 }
 .card-actions { display: flex; gap: 4px; }
 .action-btn {
     background: none; border: none; cursor: pointer; font-size: 13px; color: var(--ink-faint); padding: 2px 6px; border-radius: 6px;
 }
-.action-btn:hover { background: #e2e8f0; color: var(--ink); }
+.action-btn:hover { background: #d9ecdd; color: var(--ink); }
 .card h3 { margin: 0 0 6px; font-size: 15px; font-weight: 700; word-break: break-word; }
 .card p { margin: 0; color: var(--ink-soft); font-size: 12.5px; line-height: 1.5; word-break: break-word; }
 .card-meta { margin-top: auto; padding-top: 10px; display: flex; justify-content: space-between; align-items: center; }
-.account-badge { font-size: 11px; background: #f1f5f9; padding: 3px 8px; border-radius: 6px; color: var(--ink-soft); font-weight: 600; }
+.account-badge { font-size: 11px; background: #eef7f0; padding: 3px 8px; border-radius: 6px; color: var(--ink-soft); font-weight: 600; }
 .card-link { font-size: 12px; font-weight: 700; color: var(--brand); text-decoration: none; display: flex; align-items: center; gap: 2px; }
 /* Login-style cards (EmyWay only now) */
 .card.card-wide { grid-column: span 2; }
@@ -87,11 +88,11 @@ main { width: min(1180px, 94%); margin: 0 auto 60px; }
     width: 100%; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px;
     font-size: 14px; font-family: inherit; outline: none; background: #fff; color: var(--ink);
 }
-.login-info input[type="text"]:focus { border-color: var(--brand); box-shadow: 0 0 0 3px rgba(37,99,235,0.14); }
-.account-row { display: flex; justify-content: space-between; align-items: center; background: #f6f8fb; padding: 9px 12px; border-radius: 9px; font-size: 13px; }
+.login-info input[type="text"]:focus { border-color: var(--brand); box-shadow: 0 0 0 3px rgba(22,163,74,0.14); }
+.account-row { display: flex; justify-content: space-between; align-items: center; background: #f5faf6; padding: 9px 12px; border-radius: 9px; font-size: 13px; }
 .account-row strong { font-weight: 700; }
-.account-row button { padding: 5px 10px; border: none; border-radius: 7px; cursor: pointer; background: #e9edf3; font-size: 12px; line-height: 1; }
-.account-row button:hover { background: #dde3ec; }
+.account-row button { padding: 5px 10px; border: none; border-radius: 7px; cursor: pointer; background: #e3f0e6; font-size: 12px; line-height: 1; }
+.account-row button:hover { background: #d6e9da; }
 .emy-btn {
     display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-align: center;
     padding: 11px; background: var(--brand); color: #fff; text-decoration: none; border-radius: 10px;
@@ -107,17 +108,17 @@ main { width: min(1180px, 94%); margin: 0 auto 60px; }
     width: 100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px;
     font-size: 14px; font-family: inherit; color: var(--ink); outline: none; background: #fff;
 }
-.ws-field input:focus, .ws-field textarea:focus { border-color: var(--brand); box-shadow: 0 0 0 3px rgba(37,99,235,0.14); }
+.ws-field input:focus, .ws-field textarea:focus { border-color: var(--brand); box-shadow: 0 0 0 3px rgba(22,163,74,0.14); }
 .ws-field textarea { min-height: 120px; resize: vertical; line-height: 1.6; }
 .ws-buttons { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
 .ws-buttons button { border: none; border-radius: 10px; padding: 11px 18px; font-size: 13.5px; font-weight: 700; cursor: pointer; font-family: inherit; }
 .ws-save { background: var(--brand); color: #fff; }
 .ws-save:hover { opacity: 0.9; }
-.ws-clear { background: #eef1f6; color: var(--ink); }
-.ws-clear:hover { background: #e3e8f0; }
+.ws-clear { background: #e9f5ec; color: var(--ink); }
+.ws-clear:hover { background: #dbebe0; }
 .ws-search-row { margin: 22px 0 14px; }
 .ws-records { display: grid; gap: 12px; }
-.ws-record { background: #f8fafc; border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
+.ws-record { background: #f7fbf8; border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
 .ws-record-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; flex-wrap: wrap; }
 .ws-filename { font-size: 15px; font-weight: 700; color: var(--ink); }
 .ws-date { font-size: 11.5px; color: var(--ink-faint); margin-top: 2px; }
@@ -134,17 +135,17 @@ footer { text-align: center; padding: 25px; color: var(--ink-faint); font-size: 
 <body>
 <header>
     <div class="logo">Δ</div>
-    <h1>吉米大夫-載而塔坐堂常常逛的巿集</h1>
+    <h1>吉米大夫-載而塔坐堂常用網站</h1>
     <p class="subtitle">AI 人工智慧・醫療雲端・工作與生產力工具・內容創作・影音學習・Portable Browser・可拖曳編輯入口</p>
 </header>
 <div class="tabs-nav-container">
     <nav class="tabs-nav">
-        <a href="index.html" class="tab-btn">吉米大夫常常逛的巿集</a>
-        <a href="delta.html" class="tab-btn active">載塔駐廠常常逛的巿集</a>
-        <a href="cgu.html" class="tab-btn">我的對的學堂常常逛的巿集</a>
-        <a href="ntsu.html" class="tab-btn">我的好學堂常常逛的巿集</a>
-        <a href="cgmh-med.html" class="tab-btn">我的白房子醫用常常逛的巿集</a>
-        <a href="cgmh-admin.html" class="tab-btn">我的白房子行政常常逛的巿集</a>
+        <a href="index.html" class="tab-btn">吉米大夫常用網頁</a>
+        <a href="delta.html" class="tab-btn active">載塔駐廠常用網頁</a>
+        <a href="cgu.html" class="tab-btn">我的對的學堂常用網頁</a>
+        <a href="ntsu.html" class="tab-btn">我的好學堂常用網頁</a>
+        <a href="cgmh-med.html" class="tab-btn">我的白房子醫用常用網頁</a>
+        <a href="cgmh-admin.html" class="tab-btn">我的白房子行政常用網頁</a>
     </nav>
 </div>
 <div class="toolbar">
@@ -156,7 +157,7 @@ footer { text-align: center; padding: 25px; color: var(--ink-faint); font-size: 
     <div id="cardGrid" class="grid"></div>
 </main>
 <footer>
-    <strong>吉米大夫-載而塔坐堂常常逛的巿集</strong> • 拖曳卡片即可排序，變更將自動儲存於目前頁面。<br>© 2026 Jimmy Doctor
+    <strong>吉米大夫-載而塔坐堂常用網站</strong> • 拖曳卡片即可排序，變更將自動儲存於目前頁面。<br>© 2026 Jimmy Doctor
 </footer>
 <script>
 const STORAGE_KEY = "tab_jimmy_delta_cards_v1";
