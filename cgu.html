@@ -14,9 +14,9 @@
     --surface: #ffffff;
     --surface-border: #e1dfdd;
     --line: #e1dfdd;
-    --brand: #0067b8;
-    --brand-dark: #001b3d;
-    --brand-light: #e5f1fb;
+    --brand: #7c3aed;
+    --brand-dark: #2e1065;
+    --brand-light: #f1eafe;
     --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
     --shadow-md: 0 6px 20px rgba(0,0,0,0.14);
     --radius-md: 8px;
@@ -59,7 +59,7 @@ h1 { margin: 14px 0 6px; font-size: 24px; font-weight: 800; color: #fff; }
 .btn:hover { opacity: 0.9; }
 .btn-secondary { background: #f3f2f1; color: var(--ink); border: 1px solid var(--line); }
 main { max-width: 1180px; margin: 0 auto 60px; padding: 0 20px; box-sizing: border-box; }
-.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); grid-auto-flow: dense; gap: 16px; min-height: 80px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); grid-auto-flow: dense; gap: 18px; min-height: 80px; }
 .card {
     position: relative; display: flex; flex-direction: column; padding: 18px;
     border-radius: var(--radius-lg); text-decoration: none; color: inherit; background: var(--bg-card);
@@ -71,8 +71,8 @@ main { max-width: 1180px; margin: 0 auto 60px; padding: 0 20px; box-sizing: bord
 .card.dragging { opacity: 0.4; transform: scale(0.98); }
 .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin: -18px -18px 12px; padding: 14px 14px 22px; gap: 8px; background: linear-gradient(135deg, var(--brand-dark), var(--brand)); }
 .icon {
-    width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center;
-    background: rgba(255,255,255,0.18); color: #fff; font-size: 16px; font-weight: 800; flex-shrink: 0;
+    width: 42px; height: 42px; border-radius: 14px; display: flex; align-items: center; justify-content: center;
+    background: rgba(255,255,255,0.18); color: #fff; font-size: 18px; font-weight: 800; flex-shrink: 0;
 }
 .card-actions { display: flex; gap: 4px; flex-shrink: 0; }
 .action-btn { background: rgba(255,255,255,0.18); border: none; cursor: pointer; font-size: 12px; color: #fff; padding: 4px 7px; border-radius: 6px; }
@@ -133,9 +133,64 @@ main { max-width: 1180px; margin: 0 auto 60px; padding: 0 20px; box-sizing: bord
 .ws-empty { text-align: center; padding: 30px; color: var(--ink-faint); font-size: 13px; }
 footer { text-align: center; padding: 25px; color: var(--ink-faint); font-size: 12.5px; border-top: 1px solid var(--line); background: #fff; }
 
+
+/* ============== Sidebar + Most-Used (added) ============== */
+.app-shell { display:flex; align-items:flex-start; min-height:100vh; }
+.content-col { flex:1 1 auto; min-width:0; }
+.sidebar {
+    width:230px; flex-shrink:0; background:var(--brand-dark); color:#fff;
+    padding:22px 14px; box-sizing:border-box; position:sticky; top:0;
+    align-self:flex-start; max-height:100vh; overflow-y:auto;
+}
+.sidebar-brand { font-weight:800; font-size:14.5px; margin:0 4px 20px; opacity:.92; letter-spacing:.2px; display:flex; align-items:center; gap:6px; }
+.sidebar-group { margin-bottom:22px; }
+.sidebar-group-title { font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; opacity:.55; margin:0 0 8px 6px; }
+.sidebar-tabs, .sidebar-sections { display:flex; flex-direction:column; gap:3px; }
+.sidebar-tabs a, .sidebar-sections a {
+    display:block; padding:8px 10px; border-radius:8px; color:rgba(255,255,255,.82);
+    text-decoration:none; font-size:13px; line-height:1.4; transition:background .15s,color .15s;
+}
+.sidebar-tabs a:hover, .sidebar-sections a:hover { background:rgba(255,255,255,.14); color:#fff; }
+.sidebar-tabs a.active { background:rgba(255,255,255,.2); color:#fff; font-weight:700; }
+.sidebar-toggle {
+    display:none; position:fixed; top:14px; left:14px; z-index:1100; width:42px; height:42px;
+    border-radius:10px; border:none; cursor:pointer; background:var(--brand-dark); color:#fff;
+    font-size:18px; box-shadow:var(--shadow-md);
+}
+.sidebar-backdrop { display:none; }
+@media (max-width:960px) {
+    .app-shell { display:block; }
+    .sidebar { position:fixed; top:0; left:-250px; height:100vh; width:230px; z-index:1050; transition:left .25s ease; }
+    .sidebar.open { left:0; }
+    .sidebar-toggle { display:flex; align-items:center; justify-content:center; }
+    .sidebar-backdrop { position:fixed; inset:0; background:rgba(0,0,0,.35); z-index:1040; }
+    .sidebar-backdrop.show { display:block; }
+}
+.section-title { display:flex; align-items:baseline; gap:10px; margin:0 0 18px; padding-left:12px; font-size:19px; font-weight:750; border-left:4px solid var(--section-accent, var(--brand)); }
+.section-title span { color:var(--ink-faint); font-size:12.5px; font-weight:500; }
+.section--mostused { --section-accent: var(--brand); margin-bottom:32px; }
+.mostused-hint { color:var(--ink-faint); font-size:12.5px; margin:-6px 0 14px 12px; }
+.mostused-badge { position:absolute; top:10px; left:10px; background:var(--brand); color:#fff; font-size:10.5px; font-weight:700; padding:3px 8px; border-radius:999px; box-shadow:var(--shadow-sm); z-index:2; }
+.mostused-clone { position:relative !important; border:1px solid var(--brand) !important; }
 </style>
 </head>
 <body>
+<div class="app-shell">
+<aside class="sidebar" id="appSidebar">
+    <div class="sidebar-brand">🌐 常用網站導覽</div>
+    <div class="sidebar-group">
+        <div class="sidebar-group-title">切換分頁</div>
+        <nav class="sidebar-tabs" id="sidebarTabs"></nav>
+    </div>
+    <div class="sidebar-group">
+        <div class="sidebar-group-title">本頁分類</div>
+        <nav class="sidebar-sections" id="sidebarSections"></nav>
+    </div>
+</aside>
+<button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="開啟選單">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="content-col">
+
 <header>
     <div class="logo">🩺</div>
     <h1>我的白房子醫用常用網頁</h1>
@@ -157,6 +212,11 @@ footer { text-align: center; padding: 25px; color: var(--ink-faint); font-size: 
     <button class="btn btn-secondary" onclick="resetDefaultCards()">↺ 還原預設</button>
 </div>
 <main>
+<section id="mostused-section" class="section section--mostused">
+    <h2 class="section-title">⭐ 常用網站<span>依使用頻率自動排序，最常用的會排在最前面</span></h2>
+    <p class="mostused-hint" id="mostused-hint" style="display:none;">尚未累積點擊紀錄，暫時顯示預設常用網站。</p>
+    <div class="grid" id="grid-mostused"></div>
+</section>
     <div id="cardGrid" class="grid"></div>
 </main>
 <footer>
@@ -243,6 +303,7 @@ function renderCards() {
         el.className = "card" + (card.type === "login" || card.type === "emy" ? " card-wide" : "") + (card.type === "workspace" ? " card-workspace" : "");
         el.draggable = true;
         el.dataset.index = index;
+        el.dataset.meta = card.meta || "";
         if (card.type === "login") {
             el.innerHTML = renderLoginCard(card);
         } else if (card.type === "emy") {
@@ -625,6 +686,216 @@ function wsRenderRecords() {
 }
 // Initial Render
 renderCards();
+</script>
+</div></div>
+<script>
+/* ============== Sidebar + Most-Used (added) ============== */
+(function(){
+  function buildSidebarTabs(){
+    var src = document.querySelectorAll(".tabs-nav a.tab-btn");
+    var target = document.getElementById("sidebarTabs");
+    if (!target || !src.length) return;
+    target.innerHTML = "";
+    src.forEach(function(a){
+      var link = document.createElement("a");
+      link.href = a.getAttribute("href");
+      link.textContent = a.textContent;
+      if (a.classList.contains("active")) link.classList.add("active");
+      target.appendChild(link);
+    });
+  }
+
+  function buildSidebarSections(){
+    var target = document.getElementById("sidebarSections");
+    if (!target) return;
+    target.innerHTML = "";
+    var items = [];
+    document.querySelectorAll("main > section").forEach(function(sec, i){
+      if (sec.id === "mostused-section") return;
+      var titleEl = sec.querySelector(".section-title");
+      if (!titleEl) return;
+      var label = (titleEl.childNodes[0] ? titleEl.childNodes[0].textContent : titleEl.textContent).trim();
+      if (!label) return;
+      if (!sec.id) sec.id = "sec-" + i;
+      items.push({ id: sec.id, label: label });
+    });
+    if (items.length) {
+      items.forEach(function(it){
+        var a = document.createElement("a");
+        a.href = "#" + it.id;
+        a.textContent = it.label;
+        target.appendChild(a);
+      });
+      return;
+    }
+    var cats = [];
+    document.querySelectorAll("[data-meta]").forEach(function(el){
+      var m = el.dataset.meta;
+      if (m && cats.indexOf(m) === -1) cats.push(m);
+    });
+    if (cats.length) {
+      var clearA = document.createElement("a");
+      clearA.href = "#";
+      clearA.textContent = "— 顯示全部 —";
+      clearA.style.opacity = "0.75";
+      clearA.addEventListener("click", function(e){
+        e.preventDefault();
+        var search = document.getElementById("search");
+        if (search) { search.value = ""; if (typeof window.filterCards === "function") window.filterCards(); }
+      });
+      target.appendChild(clearA);
+    }
+    cats.forEach(function(cat){
+      var a = document.createElement("a");
+      a.href = "#";
+      a.textContent = "🏷 " + cat;
+      a.addEventListener("click", function(e){
+        e.preventDefault();
+        var search = document.getElementById("search");
+        if (search) { search.value = cat; if (typeof window.filterCards === "function") window.filterCards(); }
+        var grid = document.getElementById("cardGrid");
+        if (grid) grid.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+      target.appendChild(a);
+    });
+  }
+
+  function setupToggle(){
+    var btn = document.getElementById("sidebarToggle");
+    var sidebar = document.getElementById("appSidebar");
+    var backdrop = document.getElementById("sidebarBackdrop");
+    if (!btn || !sidebar) return;
+    function closeSidebar(){ sidebar.classList.remove("open"); if (backdrop) backdrop.classList.remove("show"); }
+    btn.addEventListener("click", function(){
+      sidebar.classList.toggle("open");
+      if (backdrop) backdrop.classList.toggle("show");
+    });
+    if (backdrop) backdrop.addEventListener("click", closeSidebar);
+    sidebar.querySelectorAll("a").forEach(function(a){
+      a.addEventListener("click", function(){ if (window.innerWidth <= 960) closeSidebar(); });
+    });
+  }
+
+  var PAGE_KEY = (location.pathname.split("/").pop() || "index.html").replace(/\.html$/, "") || "index";
+  var CLICK_KEY = "jimmyMostUsedClicks_v1_" + PAGE_KEY;
+  function loadClicks(){ try { return JSON.parse(localStorage.getItem(CLICK_KEY) || "{}"); } catch(e){ return {}; } }
+  function saveClicks(c){ try { localStorage.setItem(CLICK_KEY, JSON.stringify(c)); } catch(e){} }
+  var clicks = loadClicks();
+  var mostUsedSection, mostUsedGrid, mostUsedHint;
+
+  function isTrackable(a){
+    if (a.closest("#mostused-section")) return false;
+    if (a.closest("#appSidebar")) return false;
+    var href = a.getAttribute("href") || "";
+    if (!href || href.charAt(0) === "#" || href.indexOf("javascript:") === 0) return false;
+    return true;
+  }
+  function isControlClick(e){
+    return !!e.target.closest(".ctrl-btn,.card-controls,.edit-form,.action-btn,.card-actions,.ws-save,.ws-clear,.ws-delete,.pc-btn");
+  }
+  function displayCardFor(a){ return a.closest(".card") || a; }
+
+  function attachTracking(){
+    document.querySelectorAll("main a[href]").forEach(function(a){
+      if (!isTrackable(a)) return;
+      if (a.dataset.muBound) return;
+      a.dataset.muBound = "1";
+      a.addEventListener("click", function(e){
+        if (a.classList.contains("editing")) return;
+        if (isControlClick(e)) return;
+        var key = a.getAttribute("href");
+        clicks[key] = (clicks[key] || 0) + 1;
+        saveClicks(clicks);
+        scheduleRefresh();
+      });
+    });
+  }
+
+  function collectCandidates(){
+    var map = new Map();
+    document.querySelectorAll("main a[href]").forEach(function(a){
+      if (!isTrackable(a)) return;
+      var key = a.getAttribute("href");
+      if (!map.has(key)) map.set(key, displayCardFor(a));
+    });
+    return map;
+  }
+
+  function cleanClone(node){
+    var clone = node.cloneNode(true);
+    clone.removeAttribute("draggable");
+    clone.querySelectorAll(".card-actions,.card-controls,.ctrl-btn,.edit-form,.action-btn").forEach(function(el){ el.remove(); });
+    clone.classList.add("mostused-clone");
+    return clone;
+  }
+
+  function renderMostUsed(){
+    if (!mostUsedGrid) return;
+    var map = collectCandidates();
+    var entries = Array.from(map.entries()).map(function(pair){
+      return { key: pair[0], el: pair[1], count: clicks[pair[0]] || 0 };
+    });
+    var ranked = entries.filter(function(e){ return e.count > 0; }).sort(function(a,b){ return b.count - a.count; }).slice(0, 8);
+    var usingFallback = false;
+    if (!ranked.length) {
+      ranked = entries.filter(function(e){ return e.el.classList.contains("featured"); }).slice(0, 6);
+      usingFallback = true;
+    }
+    if (!ranked.length) { ranked = entries.slice(0, 6); usingFallback = true; }
+    mostUsedGrid.innerHTML = "";
+    if (!ranked.length) { if (mostUsedSection) mostUsedSection.style.display = "none"; return; }
+    if (mostUsedSection) mostUsedSection.style.display = "";
+    ranked.forEach(function(e){
+      var clone = cleanClone(e.el);
+      if (e.count > 0) {
+        var badge = document.createElement("span");
+        badge.className = "mostused-badge";
+        badge.textContent = "🔥 " + e.count;
+        clone.appendChild(badge);
+      }
+      clone.addEventListener("click", function(){
+        clicks[e.key] = (clicks[e.key] || 0) + 1;
+        saveClicks(clicks);
+      });
+      mostUsedGrid.appendChild(clone);
+    });
+    if (mostUsedHint) mostUsedHint.style.display = usingFallback ? "" : "none";
+  }
+
+  var refreshTimer = null;
+  function scheduleRefresh(){
+    if (refreshTimer) return;
+    refreshTimer = setTimeout(function(){
+      refreshTimer = null;
+      attachTracking();
+      renderMostUsed();
+    }, 150);
+  }
+
+  function setupObserver(){
+    var main = document.querySelector("main");
+    if (!main) return;
+    var obs = new MutationObserver(function(mutations){
+      var relevant = mutations.some(function(m){ return !(mostUsedSection && mostUsedSection.contains(m.target)); });
+      if (relevant) scheduleRefresh();
+    });
+    obs.observe(main, { childList: true, subtree: true });
+  }
+
+  function init(){
+    mostUsedSection = document.getElementById("mostused-section");
+    mostUsedGrid = document.getElementById("grid-mostused");
+    mostUsedHint = document.getElementById("mostused-hint");
+    buildSidebarTabs();
+    buildSidebarSections();
+    setupToggle();
+    attachTracking();
+    renderMostUsed();
+    setupObserver();
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+  else init();
+})();
 </script>
 </body>
 </html>
