@@ -2,1532 +2,565 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>吉米大夫-Delta坐堂常常逛的景點</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0067b8">
+<title>吉米大夫常用網頁</title>
 <style>
-/* =========================================================
-   Design Tokens
-========================================================= */
-:root {
-    --bg-1: #f2f2f2;
-    --bg-2: #f2f2f2;
-    --bg-3: #f2f2f2;
-    --ink: #1a1a1a;
-    --ink-soft: #605e5c;
-    --ink-faint: #8a8886;
-    --surface: #ffffff;
-    --surface-border: #e1dfdd;
-    --line: #e1dfdd;
-    --brand: #0067b8;
-    --brand-dark: #001b3d;
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
-    --shadow-md: 0 6px 20px rgba(0,0,0,0.14);
-    --radius-lg: 12px;
-    --radius-md: 8px;
-    --accent-ai: #0067b8;
-    --accent-tools: #0067b8;
-    --accent-med: #0067b8;
-    --accent-write: #0067b8;
-    --accent-media: #0067b8;
-    --accent-browser: #0067b8;
-    --accent-webspace: #0067b8;
+:root{
+  --bg:#eef1f4; --surface:#fff; --ink:#15212b; --soft:#5d6b78; --line:#d9e0e6;
+  --accent:#0067b8; --accent-soft:color-mix(in srgb,var(--accent) 12%,transparent);
+  --radius:10px;
 }
-/* =========================================================
-   Global
-========================================================= */
-* {
-    box-sizing: border-box;
+@media (prefers-color-scheme:dark){
+  :root{--bg:#0f1418; --surface:#182026; --ink:#e7edf2; --soft:#8d9ba8; --line:#27323b}
 }
-html {
-    scroll-behavior: smooth;
-}
-body {
-    margin: 0;
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        "Noto Sans TC",
-        "Microsoft JhengHei",
-        Arial,
-        sans-serif;
-    color: var(--ink);
-    min-height: 100vh;
-    background:
-        linear-gradient(
-            150deg,
-            var(--bg-1) 0%,
-            var(--bg-2) 45%,
-            var(--bg-3) 100%
-        );
-    background-attachment: fixed;
-    -webkit-font-smoothing: antialiased;
-}
-/* =========================================================
-   Focus
-========================================================= */
-a:focus-visible,
-input:focus-visible,
-button:focus-visible,
-select:focus-visible,
-textarea:focus-visible {
-    outline: 2px solid var(--brand);
-    outline-offset: 3px;
-}
-/* =========================================================
-   Header
-========================================================= */
-header {
-    padding: 50px 20px 28px;
-    text-align: center;
-    background: var(--brand-dark);
-    color: #fff;
-}
-.logo {
-    width: 76px;
-    height: 76px;
-    margin: auto;
-    border-radius: 22px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background:
-        linear-gradient(
-            135deg,
-            var(--brand-dark),
-            var(--brand)
-        );
-    color: white;
-    font-size: 34px;
-    font-weight: 800;
-    box-shadow:
-        0 16px 32px rgba(37,99,235,0.28);
-}
-h1 {
-    margin: 20px 0 10px;
-    font-size:
-        clamp(24px, 4vw, 32px);
-    font-weight: 800;
-    letter-spacing: -0.6px;
-}
-.subtitle {
-    max-width: 760px;
-    margin: 0 auto;
-    color: rgba(255,255,255,0.72);
-    font-size: 14.5px;
-    line-height: 1.85;
-}
-.status {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 16px;
-    padding: 7px 16px;
-    border-radius: 999px;
-    background: rgba(255,255,255,0.12);
-    border: 1px solid rgba(255,255,255,0.25);
-    color: #fff;
-    font-size: 12px;
-    box-shadow: var(--shadow-sm);
-}
-.dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: #22c55e;
-    box-shadow:
-        0 0 0 3px rgba(34,197,94,0.18);
-}
-/* =========================================================
-   Tab Navigation
-========================================================= */
-.tabs-nav-container {
-    width: min(1180px,94%);
-    margin: 0 auto 18px;
-    overflow-x: auto;
-    scrollbar-width: thin;
-}
-.tabs-nav {
-    display: flex;
-    gap: 8px;
-    padding: 8px;
-    background: #fff;
-    border:
-        1px solid var(--surface-border);
-    border-radius: 16px;
-    box-shadow: var(--shadow-sm);
-}
-.tab-btn {
-    flex: 0 0 auto;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 42px;
-    padding: 9px 15px;
-    border-radius: 11px;
-    text-decoration: none;
-    color: var(--ink-soft);
-    font-size: 13px;
-    font-weight: 700;
-    white-space: nowrap;
-    transition:
-        background 0.16s ease,
-        color 0.16s ease,
-        transform 0.16s ease;
-}
-.tab-btn:hover {
-    background: #eef2ff;
-    color: var(--brand);
-    transform:
-        translateY(-1px);
-}
-.tab-btn.active {
-    background: transparent;
-    color: var(--brand);
-    border-bottom: 3px solid var(--brand);
-    box-shadow: none;
-}
-/* =========================================================
-   Search
-========================================================= */
-.search-area {
-    max-width: 640px;
-    margin: 28px auto 0;
-    padding: 0 20px;
-}
-.search-box {
-    width: 100%;
-    padding: 15px 20px;
-    border:
-        1px solid var(--line);
-    border-radius: 16px;
-    outline: none;
-    background: var(--surface);
-    font-size: 15px;
-    font-family: inherit;
-    color: var(--ink);
-    box-shadow: var(--shadow-sm);
-    transition:
-        box-shadow 0.18s ease,
-        border-color 0.18s ease;
-}
-.search-box::placeholder {
-    color: var(--ink-faint);
-}
-.search-box:focus {
-    border-color:
-        var(--brand);
-    box-shadow:
-        0 0 0 4px
-        rgba(59,130,246,0.14);
-}
-/* =========================================================
-   Portal Controls
-========================================================= */
-.portal-controls {
-    max-width: 640px;
-    margin: 14px auto 0;
-    padding: 0 20px;
-    display: flex;
-    gap: 12px;
-}
-.pc-btn {
-    flex: 1;
-    padding: 13px;
-    border: none;
-    border-radius: 14px;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    font-family: inherit;
-    box-shadow: var(--shadow-sm);
-    transition:
-        transform 0.16s ease,
-        opacity 0.16s ease;
-}
-.pc-btn:hover {
-    transform:
-        translateY(-2px);
-    opacity: 0.95;
-}
-.pc-btn:active {
-    transform: translateY(0);
-}
-.pc-add {
-    background:
-        linear-gradient(
-            135deg,
-            var(--brand-dark),
-            var(--brand)
-        );
-    color: white;
-}
-.pc-restore {
-    background: #475569;
-    color: white;
-}
-/* =========================================================
-   Main
-========================================================= */
-main {
-    width: min(1180px,94%);
-    margin:
-        0 auto 60px;
-}
-.section {
-    margin-top:
-        52px;
-}
-.section-title {
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
-    margin:
-        0 0 18px;
-    padding-left: 12px;
-    font-size: 19px;
-    font-weight: 750;
-    border-left:
-        4px solid
-        var(--section-accent, var(--brand));
-}
-.section-title span {
-    color: var(--ink-faint);
-    font-size: 12.5px;
-    font-weight: 500;
-}
-.section--ai { --section-accent: var(--accent-ai); }
-.section--tools { --section-accent: var(--accent-tools); }
-.section--med { --section-accent: var(--accent-med); }
-.section--write { --section-accent: var(--accent-write); }
-.section--media { --section-accent: var(--accent-media); }
-.section--browser { --section-accent: var(--accent-browser); }
-.section--webspace { --section-accent: var(--accent-webspace); }
-/* =========================================================
-   Grid
-========================================================= */
-.grid {
-    display: grid;
-    grid-template-columns:
-        repeat(auto-fit, minmax(215px,1fr));
-    gap: 14px;
-}
-.dyn-marker {
-    display: none;
-}
-/* =========================================================
-   Card
-========================================================= */
-.card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    padding: 18px 40px 18px 18px;
-    min-height: 108px;
-    border-radius: var(--radius-md);
-    text-decoration: none;
-    color: inherit;
-    background: var(--surface);
-    border: 1px solid var(--surface-border);
-    box-shadow: var(--shadow-sm);
-    transition:
-        transform 0.16s ease,
-        box-shadow 0.16s ease,
-        border-color 0.16s ease;
-}
-.card::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 14px;
-    bottom: 14px;
-    width: 3px;
-    border-radius: 3px;
-    background: var(--section-accent, var(--brand));
-    opacity: 0;
-    transition: opacity 0.16s ease;
-}
-.card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
-.card:hover::before { opacity: 1; }
-.card:active { transform: translateY(-1px); }
-.featured {
-    background:
-        linear-gradient(160deg, rgba(255,255,255,0.98), rgba(248,250,255,0.98));
-}
-/* =========================================================
-   Icon
-========================================================= */
-.icon {
-    width: 34px;
-    height: 34px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 11px;
-    background: var(--brand);
-    color: #fff;
-    font-size: 16px;
-    font-weight: 800;
-    flex-shrink: 0;
-}
-/* =========================================================
-   Card Typography
-========================================================= */
-.card h3 { margin: 0 0 5px; font-size: 14.5px; font-weight: 700; line-height: 1.4; }
-.card p { margin: 0; color: var(--ink-soft); font-size: 12px; line-height: 1.6; }
-.arrow {
-    position: absolute;
-    right: 16px;
-    bottom: 16px;
-    color: var(--ink-faint);
-    font-size: 14px;
-    transition: transform 0.16s ease, color 0.16s ease;
-}
-.card:hover .arrow { color: var(--section-accent, var(--brand)); transform: translate(2px,-2px); }
-/* =========================================================
-   Dynamic Card Controls
-========================================================= */
-.card[data-dynamic="true"] { cursor: grab; }
-.card[data-dynamic="true"]:active { cursor: grabbing; }
-.card[data-dynamic="true"].editing { cursor: default; }
-.card.dragging { opacity: 0.35; box-shadow: none; }
-.card-controls {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    display: flex;
-    gap: 5px;
-    opacity: 0;
-    transform: translateY(-3px);
-    transition: opacity 0.14s ease, transform 0.14s ease;
-    z-index: 2;
-}
-.card:hover .card-controls,
-.card.editing .card-controls { opacity: 1; transform: translateY(0); }
-.ctrl-btn {
-    width: 26px;
-    height: 26px;
-    border: none;
-    border-radius: 8px;
-    background: rgba(255,255,255,0.96);
-    box-shadow: var(--shadow-sm);
-    cursor: pointer;
-    font-size: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--ink-soft);
-}
-.ctrl-btn:hover { color: var(--ink); }
-.ctrl-del:hover { color: #b91c1c; }
-/* =========================================================
-   Edit Form
-========================================================= */
-.edit-form { display: flex; flex-direction: column; }
-.edit-form label { font-size: 11px; font-weight: 700; color: var(--ink-soft); margin: 6px 0 3px; }
-.edit-form label:first-child { margin-top: 0; }
-.edit-form input,
-.edit-form textarea {
-    width: 100%;
-    padding: 7px 9px;
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    font-size: 12.5px;
-    font-family: inherit;
-    color: var(--ink);
-    outline: none;
-    background: white;
-}
-.edit-form textarea { min-height: 48px; resize: vertical; line-height: 1.5; }
-.edit-form .ef-check { display: flex; align-items: center; gap: 6px; font-size: 11.5px; cursor: pointer; }
-.edit-form .ef-check input { width: auto; }
-.ef-buttons { display: flex; gap: 8px; margin-top: 10px; }
-.ef-buttons button { flex: 1; border: none; border-radius: 8px; padding: 8px; font-weight: 700; cursor: pointer; font-family: inherit; }
-.ef-save { background: var(--section-accent, var(--brand)); color: white; }
-.ef-cancel { background: #eef1f6; color: var(--ink); }
-/* =========================================================
-   EmyWay / Account Cards
-========================================================= */
-.card-emyway { grid-column: span 2; cursor: default; }
-.card-top { display: flex; align-items: flex-start; gap: 12px; }
-.card-top .icon { margin-bottom: 0; }
-.login-info {
-    margin-top: 16px;
-    padding-top: 14px;
-    border-top: 1px dashed var(--line);
-    display: grid;
-    gap: 10px;
-}
-.emy-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    text-align: center;
-    padding: 11px;
-    background: var(--section-accent, var(--brand));
-    color: white;
-    text-decoration: none;
-    border-radius: 10px;
-    font-weight: 700;
-    font-size: 13.5px;
-}
-.emy-btn:hover { opacity: 0.9; }
-/* =========================================================
-   WebSpace
-========================================================= */
-.workspace-panel {
-    background: var(--surface);
-    border: 1px solid var(--surface-border);
-    border-radius: var(--radius-lg);
-    padding: 26px;
-    box-shadow: var(--shadow-sm);
-}
-.ws-intro { color: var(--ink-soft); font-size: 13px; line-height: 1.7; margin: -6px 0 20px; }
-.ws-field { margin-bottom: 14px; }
-.ws-field label { display: block; font-size: 12.5px; font-weight: 700; color: var(--ink-soft); margin-bottom: 6px; }
-.ws-field input,
-.ws-field textarea {
-    width: 100%;
-    padding: 12px 14px;
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    font-size: 14px;
-    font-family: inherit;
-    color: var(--ink);
-    outline: none;
-    background: white;
-}
-.ws-field textarea { min-height: 130px; resize: vertical; line-height: 1.6; }
-.ws-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
-.ws-buttons button { border: none; border-radius: 10px; padding: 11px 18px; font-size: 13.5px; font-weight: 700; cursor: pointer; font-family: inherit; }
-.ws-save { background: var(--section-accent, var(--brand)); color: white; }
-.ws-clear { background: #eef1f6; color: var(--ink); }
-.ws-search-row { margin-top: 26px; }
-.ws-records { display: grid; gap: 12px; }
-.ws-record { background: #f8fafc; border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
-.ws-record-header { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
-.ws-filename { font-size: 15px; font-weight: 700; }
-.ws-date { font-size: 11.5px; color: var(--ink-faint); }
-.ws-record-content {
-    margin-top: 10px;
-    white-space: pre-wrap;
-    line-height: 1.7;
-    font-size: 13px;
-    color: var(--ink-soft);
-    background: white;
-    border: 1px solid var(--line);
-    padding: 12px 14px;
-    border-radius: 10px;
-}
-.ws-delete { background: #fee2e2; color: #b91c1c; border: none; padding: 7px 12px; border-radius: 8px; cursor: pointer; }
-.ws-empty { text-align: center; padding: 30px; color: var(--ink-faint); font-size: 13px; }
-/* =========================================================
-   Modal
-========================================================= */
-.modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(15,23,42,0.45);
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    padding: 20px;
-}
-.modal-overlay.open { display: flex; }
-.modal-box { background: white; border-radius: 20px; padding: 26px; width: 100%; max-width: 420px; box-shadow: var(--shadow-md); max-height: 90vh; overflow-y: auto; }
-.modal-box h3 { margin: 0 0 4px; font-size: 17px; }
-.modal-sub { margin: 0 0 14px; font-size: 12.5px; color: var(--ink-faint); }
-.modal-box label { display: block; font-size: 12.5px; font-weight: 700; color: var(--ink-soft); margin: 12px 0 6px; }
-.modal-box input,
-.modal-box textarea,
-.modal-box select {
-    width: 100%;
-    padding: 11px 13px;
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    font-size: 14px;
-    font-family: inherit;
-    outline: none;
-    color: var(--ink);
-    background: white;
-}
-.modal-box textarea { min-height: 70px; resize: vertical; line-height: 1.6; }
-.modal-checks { display: flex; gap: 18px; margin-top: 14px; }
-.modal-checks label { display: flex; align-items: center; gap: 6px; margin: 0; cursor: pointer; }
-.modal-checks input { width: auto; }
-.modal-buttons { display: flex; gap: 10px; margin-top: 22px; }
-.modal-buttons button { flex: 1; padding: 12px; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; }
-.modal-save { background: var(--brand); color: white; }
-.modal-cancel { background: #eef1f6; color: var(--ink); }
-/* =========================================================
-   Footer
-========================================================= */
-footer {
-    text-align: center;
-    padding: 30px 20px;
-    color: var(--ink-faint);
-    font-size: 12.5px;
-    line-height: 1.9;
-    border-top: 1px solid var(--line);
-}
-footer strong { color: var(--ink-soft); }
-/* =========================================================
-   Search No Results
-========================================================= */
-.no-results { display: none; text-align: center; padding: 30px; color: var(--ink-faint); font-size: 13px; }
-.grid-empty {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 26px;
-    color: var(--ink-faint);
-    font-size: 12.5px;
-    border: 1px dashed var(--line);
-    border-radius: var(--radius-md);
-}
-/* =========================================================
-   Mobile
-========================================================= */
-@media (max-width: 700px) {
-    .card-emyway { grid-column: span 1; }
-}
-@media (max-width: 600px) {
-    header { padding-top: 36px; }
-    .grid { grid-template-columns: 1fr; }
-    .section-title { font-size: 17px; flex-wrap: wrap; }
-    .portal-controls { flex-direction: column; }
-    .tabs-nav-container { width: 100%; padding: 0 10px; }
-    .tabs-nav { border-radius: 13px; }
-    .tab-btn { font-size: 12px; padding: 8px 12px; }
-}
-@media (prefers-reduced-motion: reduce) {
-    * { transition: none !important; scroll-behavior: auto !important; }
-}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","Microsoft JhengHei",sans-serif}
+.wrap{max-width:1160px;margin:0 auto;padding:0 20px}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
-/* ============== Sidebar + Most-Used (added) ============== */
-.app-shell { display:flex; align-items:flex-start; min-height:100vh; }
-.content-col { flex:1 1 auto; min-width:0; }
-.sidebar {
-    width:230px; flex-shrink:0; background:var(--brand-dark); color:#fff;
-    padding:22px 14px; box-sizing:border-box; position:sticky; top:0;
-    align-self:flex-start; max-height:100vh; overflow-y:auto;
+/* ---------- header ---------- */
+header{padding:22px 0 14px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:42px;height:42px;border-radius:12px;background:var(--accent);color:#fff;
+  display:grid;place-items:center;font-size:21px;font-weight:800;flex:none}
+h1{margin:0;font-size:20px;line-height:1.25}
+.sub{font-size:13px;color:var(--soft)}
+.profiles{display:flex;gap:6px;margin-top:14px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.profiles::-webkit-scrollbar{display:none}
+.profiles button{flex:none;display:flex;align-items:center;gap:7px;padding:6px 13px;border-radius:999px;
+  border:1px solid var(--line);background:var(--surface);cursor:pointer;font-size:13.5px}
+.profiles i{width:8px;height:8px;border-radius:50%;background:var(--c)}
+.profiles button:hover{border-color:var(--c)}
+.profiles button[aria-pressed=true]{background:var(--c);border-color:var(--c);color:#fff}
+.profiles button[aria-pressed=true] i{background:#fff}
+
+/* ---------- sticky toolbar ---------- */
+.bar{position:sticky;top:0;z-index:20;padding:10px 0;border-bottom:1px solid var(--line);
+  background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px)}
+.row{display:flex;gap:8px;align-items:center}
+.search{flex:1;min-width:0;position:relative}
+.search input{width:100%;height:40px;padding:0 44px 0 14px;border-radius:var(--radius);
+  border:1px solid var(--line);background:var(--surface)}
+.search input:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px var(--accent-soft)}
+.search kbd{position:absolute;right:10px;top:9px;font:12px/1 monospace;color:var(--soft);
+  border:1px solid var(--line);border-radius:5px;padding:3px 6px;pointer-events:none}
+.tool{height:40px;padding:0 13px;border-radius:var(--radius);border:1px solid var(--line);
+  background:var(--surface);cursor:pointer;white-space:nowrap}
+.tool:hover{border-color:var(--accent)}
+.tool[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:#fff}
+.edit-only{display:none}
+body.editing .edit-only{display:inline-block}
+.chips{display:flex;gap:6px;margin-top:9px;overflow-x:auto;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;padding:3px 11px;border-radius:999px;border:1px solid transparent;background:transparent;
+  color:var(--soft);cursor:pointer;font-size:13px}
+.chip:hover{color:var(--ink)}
+.chip[aria-pressed=true]{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+
+/* ---------- directory rows ---------- */
+main{padding:6px 0 30px}
+.group{display:grid;grid-template-columns:132px 1fr;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+.group:last-child{border-bottom:0}
+.group h2{margin:0;font-size:14px;font-weight:700;padding-top:9px;line-height:1.3}
+.group h2 small{display:block;font-weight:400;color:var(--soft);font-size:12px;margin-top:2px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(172px,1fr));gap:8px}
+body.detail .grid{grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.group.fav h2{color:var(--accent)}
+
+.tile{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius)}
+.tile:hover{border-color:var(--accent)}
+.hit{display:flex;align-items:center;gap:10px;padding:6px 10px 6px 6px;min-height:42px;color:inherit;text-decoration:none}
+.ic{flex:none;width:30px;height:30px;border-radius:8px;display:grid;place-items:center;
+  background:var(--accent-soft);color:var(--accent);font-size:16px;font-weight:700}
+.tx{min-width:0}
+.tx b{display:block;font-weight:600;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tx small{display:none;color:var(--soft);font-size:12.5px;line-height:1.35;margin-top:1px}
+body.detail .tx small{display:block}
+body.detail .hit{padding:9px 10px 9px 9px}
+.count{margin-left:auto;font-size:11.5px;color:var(--soft);padding-left:4px}
+.ed{position:absolute;top:50%;right:4px;transform:translateY(-50%);display:none;gap:2px;
+  background:var(--surface);border-radius:8px}
+body.editing .ed{display:flex}
+.ed button{border:0;background:none;cursor:pointer;padding:4px 5px;border-radius:6px;font-size:13px}
+.ed button:hover{background:var(--accent-soft)}
+body.editing .tile{cursor:grab;border-style:dashed}
+body.editing .tile.over{border-color:var(--accent);background:var(--accent-soft)}
+.empty{padding:50px 0;text-align:center;color:var(--soft)}
+
+/* ---------- WebSpace ---------- */
+details.ws{margin:4px 0 30px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+details.ws summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;display:flex;gap:8px;align-items:baseline}
+details.ws summary::-webkit-details-marker{display:none}
+details.ws summary small{font-weight:400;color:var(--soft)}
+.ws-body{padding:0 16px 16px;display:grid;gap:10px}
+.ws-body label{font-size:13px;color:var(--soft);display:block;margin-bottom:3px}
+.ws-body input,.ws-body textarea{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+.ws-body textarea{min-height:110px;resize:vertical}
+.ws-actions{display:flex;gap:8px}
+.btn{padding:8px 16px;border-radius:8px;border:1px solid var(--line);background:var(--surface);cursor:pointer}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn:disabled{opacity:.6;cursor:wait}
+.rec{border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:var(--bg)}
+.rec-h{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.rec-h b{word-break:break-all}.rec-h small{color:var(--soft);display:block}
+.rec pre{margin:8px 0 0;white-space:pre-wrap;word-break:break-word;font:13px/1.5 inherit;max-height:180px;overflow:auto}
+.rec button{border:0;background:none;color:var(--soft);cursor:pointer}
+.rec button:hover{color:#d33}
+.note{color:var(--soft);font-size:13px}
+
+footer{padding:6px 0 34px;color:var(--soft);font-size:12.5px;text-align:center}
+
+/* ---------- dialog ---------- */
+dialog{border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--ink);padding:20px;width:min(440px,92vw)}
+dialog::backdrop{background:rgba(0,0,0,.45)}
+dialog h3{margin:0 0 12px}
+dialog label{display:block;font-size:13px;color:var(--soft);margin:10px 0 3px}
+dialog input[type=text],dialog select,dialog textarea{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+dialog .chk{display:flex;gap:8px;align-items:center;color:var(--ink);font-size:14px}
+dialog .actions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
+
+@media (max-width:720px){
+  .wrap{padding:0 14px}
+  .group{grid-template-columns:1fr;gap:8px;padding:12px 0}
+  .group h2{padding-top:0;display:flex;gap:8px;align-items:baseline}
+  .group h2 small{margin:0}
+  .grid,body.detail .grid{grid-template-columns:repeat(2,1fr)}
+  body.detail .grid{grid-template-columns:1fr}
+  .search kbd{display:none}
+  .tool .lbl{display:none}
 }
-.sidebar-brand { font-weight:800; font-size:14.5px; margin:0 4px 20px; opacity:.92; letter-spacing:.2px; display:flex; align-items:center; gap:6px; }
-.sidebar-group { margin-bottom:22px; }
-.sidebar-group-title { font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; opacity:.55; margin:0 0 8px 6px; }
-.sidebar-tabs, .sidebar-sections { display:flex; flex-direction:column; gap:3px; }
-.sidebar-tabs a, .sidebar-sections a {
-    display:block; padding:8px 10px; border-radius:8px; color:rgba(255,255,255,.82);
-    text-decoration:none; font-size:13px; line-height:1.4; transition:background .15s,color .15s;
+@media (prefers-reduced-motion:no-preference){
+  .tile{transition:border-color .12s}
 }
-.sidebar-tabs a:hover, .sidebar-sections a:hover { background:rgba(255,255,255,.14); color:#fff; }
-.sidebar-tabs a.active { background:rgba(255,255,255,.2); color:#fff; font-weight:700; }
-.sidebar-toggle {
-    display:none; position:fixed; top:14px; left:14px; z-index:1100; width:42px; height:42px;
-    border-radius:10px; border:none; cursor:pointer; background:var(--brand-dark); color:#fff;
-    font-size:18px; box-shadow:var(--shadow-md);
-}
-.sidebar-backdrop { display:none; }
-@media (max-width:960px) {
-    .app-shell { display:block; }
-    .sidebar { position:fixed; top:0; left:-250px; height:100vh; width:230px; z-index:1050; transition:left .25s ease; }
-    .sidebar.open { left:0; }
-    .sidebar-toggle { display:flex; align-items:center; justify-content:center; }
-    .sidebar-backdrop { position:fixed; inset:0; background:rgba(0,0,0,.35); z-index:1040; }
-    .sidebar-backdrop.show { display:block; }
-}
-.section-title { display:flex; align-items:baseline; gap:10px; margin:0 0 18px; padding-left:12px; font-size:19px; font-weight:750; border-left:4px solid var(--section-accent, var(--brand)); }
-.section-title span { color:var(--ink-faint); font-size:12.5px; font-weight:500; }
-.section--mostused { --section-accent: var(--brand); margin-bottom:32px; }
-.mostused-hint { color:var(--ink-faint); font-size:12.5px; margin:-6px 0 14px 12px; }
-.mostused-badge { position:absolute; top:10px; left:10px; background:var(--brand); color:#fff; font-size:10.5px; font-weight:700; padding:3px 8px; border-radius:999px; box-shadow:var(--shadow-sm); z-index:2; }
-.mostused-clone { position:relative !important; border:1px solid var(--brand) !important; }
 </style>
 </head>
 <body>
-<div class="app-shell">
-<aside class="sidebar" id="appSidebar">
-    <div class="sidebar-brand">🌐 常用網站導覽</div>
-    <div class="sidebar-group">
-        <div class="sidebar-group-title">切換分頁</div>
-        <nav class="sidebar-tabs" id="sidebarTabs"></nav>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <div class="logo">Δ</div>
+      <div>
+        <h1 id="title">吉米大夫常用網頁</h1>
+        <div class="sub" id="subtitle"></div>
+      </div>
     </div>
-    <div class="sidebar-group">
-        <div class="sidebar-group-title">本頁分類</div>
-        <nav class="sidebar-sections" id="sidebarSections"></nav>
-    </div>
-</aside>
-<button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="開啟選單">☰</button>
-<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
-<div class="content-col">
+    <nav class="profiles" id="profiles" aria-label="切換身分"></nav>
+  </header>
+</div>
 
-<!-- =========================================================
-     HEADER
-========================================================= -->
-<header>
-    <div class="logo">Δ</div>
-    <h1>
-        吉米大夫-Delta坐堂常常逛的景點
-    </h1>
-    <p class="subtitle">
-        AI 人工智慧・醫療雲端・工作與生產力工具・內容創作・影音學習・Portable Browser
-        <br>
-        一站式快速入口
-    </p>
-    <div class="status">
-        <span class="dot"></span>
-        吉米大夫工作入口網站
+<div class="bar">
+  <div class="wrap">
+    <div class="row">
+      <div class="search">
+        <input id="q" type="search" placeholder="搜尋網站，按 Enter 直接開啟第一個結果" autocomplete="off">
+        <kbd>/</kbd>
+      </div>
+      <button class="tool" id="detailBtn" aria-pressed="false" title="顯示或隱藏說明">☰<span class="lbl"> 說明</span></button>
+      <button class="tool" id="editBtn" aria-pressed="false" title="編輯、排序、新增">✏️<span class="lbl"> 編輯</span></button>
     </div>
-    <!-- Search -->
-    <div class="search-area">
-        <input
-            id="search"
-            class="search-box"
-            type="search"
-            placeholder="🔍 搜尋網站、工具或服務..."
-            autocomplete="off"
-        >
+    <div class="chips" id="chips"></div>
+    <div class="row edit-only" id="editTools" style="margin-top:9px;flex-wrap:wrap">
+      <button class="tool edit-only" id="addBtn">＋ 新增網站</button>
+      <button class="tool edit-only" id="exportBtn">⬇ 匯出備份</button>
+      <button class="tool edit-only" id="importBtn">⬆ 匯入備份</button>
+      <button class="tool edit-only" id="resetBtn">↺ 還原預設</button>
+      <input type="file" id="importFile" accept="application/json" hidden>
     </div>
-    <!-- Controls -->
-    <div class="portal-controls">
-        <button type="button" class="pc-btn pc-add" onclick="openAddModal()">＋ 新增卡片</button>
-        <button type="button" class="pc-btn pc-restore" onclick="restoreDefaults()">↺ 還原預設</button>
-    </div>
-</header>
-<!-- =========================================================
-     TAB NAVIGATION
-========================================================= -->
-<div class="tabs-nav-container">
-    <nav class="tabs-nav">
-        <a href="index.html" class="tab-btn active">吉米大夫常用網頁</a>
-        <a href="delta.html" class="tab-btn">載塔駐廠常用網頁</a>
-        <a href="cgu.html" class="tab-btn">我的對的學堂常用網頁</a>
-        <a href="ntsu.html" class="tab-btn">我的好學堂常用網頁</a>
-        <a href="cgmh-med.html" class="tab-btn">我的白房子醫用常用網頁</a>
-        <a href="cgmh-admin.html" class="tab-btn">我的白房子行政常用網頁</a>
-    </nav>
+  </div>
 </div>
-<!-- =========================================================
-     MAIN
-========================================================= -->
-<main>
-<section id="mostused-section" class="section section--mostused">
-    <h2 class="section-title">⭐ 常用網站<span>依使用頻率自動排序，最常用的會排在最前面</span></h2>
-    <p class="mostused-hint" id="mostused-hint" style="display:none;">尚未累積點擊紀錄，暫時顯示預設常用網站。</p>
-    <div class="grid" id="grid-mostused"></div>
-</section>
-<!-- AI -->
-<section class="section section--ai">
-    <h2 class="section-title">🤖 AI 人工智慧<span>對話・研究・推理・創作</span></h2>
-    <div class="grid" id="grid-ai" data-section="ai"></div>
-</section>
-<!-- TOOLS -->
-<section class="section section--tools">
-    <h2 class="section-title">🛠️ 開發與臨場工具<span>原始碼・臨床輔助・廠區報備</span></h2>
-    <div class="grid" id="grid-tools" data-section="tools"></div>
-</section>
-<!-- MEDICAL / WORK -->
-<section class="section section--med">
-    <h2 class="section-title">🏥 醫療・工作・內容<span>白房子・健康・筆記・Office・部落格</span></h2>
-    <div class="grid" id="grid-med" data-section="med">
-        <div class="dyn-marker"></div>
-        <!-- Hinet -->
-        <div class="card card-emyway">
-            <div class="card-top">
-                <div class="icon">📧</div>
-                <div>
-                    <h3>Hinet 信箱</h3>
-                    <p>中華電信 Hinet Webmail。</p>
-                </div>
-            </div>
-            <div class="login-info">
-                <a href="https://webmail.hinet.net/" target="_blank" rel="noopener noreferrer" class="emy-btn">🚀 開啟 Hinet 信箱</a>
-            </div>
-        </div>
-        <!-- CGU Mail -->
-        <div class="card card-emyway">
-            <div class="card-top">
-                <div class="icon">📧</div>
-                <div>
-                    <h3>我的對的學堂信箱</h3>
-                    <p>我的對的學堂電子郵件系統。</p>
-                </div>
-            </div>
-            <div class="login-info">
-                <a href="https://mail01.cgu.edu.tw" target="_blank" rel="noopener noreferrer" class="emy-btn">🚀 開啟我的對的學堂信箱</a>
-            </div>
-        </div>
-        <!-- UpToDate -->
-        <div class="card card-emyway">
-            <div class="card-top">
-                <div class="icon">📚</div>
-                <div>
-                    <h3>UpToDate</h3>
-                    <p>臨床醫學實證資料庫。</p>
-                </div>
-            </div>
-            <div class="login-info">
-                <a href="https://www.uptodate.com" target="_blank" rel="noopener noreferrer" class="emy-btn">🚀 開啟 UpToDate</a>
-            </div>
-        </div>
-        <!-- EmyWay -->
-        <div class="card card-emyway">
-            <div class="card-top">
-                <div class="icon">📅</div>
-                <div>
-                    <h3>EmyWay</h3>
-                    <p>大夫行事曆與相關系統。</p>
-                </div>
-            </div>
-            <div class="login-info">
-                <a href="https://emyway.jct.org.tw/calendar/#/fc" target="_blank" rel="noopener noreferrer" class="emy-btn">🚀 開啟 EmyWay</a>
-            </div>
-        </div>
+
+<div class="wrap">
+  <main id="app"></main>
+
+  <details class="ws" id="ws">
+    <summary>📝 WebSpace <small>檔案名稱與內容紀錄（儲存於 Google Sheet）</small></summary>
+    <div class="ws-body">
+      <div><label for="wsName">檔案名稱</label><input id="wsName" type="text" placeholder="例如：Aortic_Dissection_20260829.html"></div>
+      <div><label for="wsText">內容</label><textarea id="wsText" placeholder="輸入或貼上內容"></textarea></div>
+      <div class="ws-actions">
+        <button class="btn primary" id="wsSave">儲存紀錄</button>
+        <button class="btn" id="wsClear">清除</button>
+      </div>
+      <div><label for="wsFind">搜尋紀錄</label><input id="wsFind" type="text" placeholder="搜尋檔案名稱或內容"></div>
+      <div id="wsList"></div>
     </div>
-</section>
-<!-- WRITING AI -->
-<section class="section section--write">
-    <h2 class="section-title">✍️ 寫作 AI<span>醫學教學・簡報・語音・圖表生成專區</span></h2>
-    <div class="grid" id="grid-write" data-section="write"></div>
-</section>
-<!-- MEDIA -->
-<section class="section section--media">
-    <h2 class="section-title">🎬 影音・社群・學習<span>Facebook・YouTube・Yahoo・股市・新聞與知識</span></h2>
-    <div class="grid" id="grid-media" data-section="media"></div>
-</section>
-<!-- BROWSER -->
-<section class="section section--browser">
-    <h2 class="section-title">🌐 Portable Browser<span>Windows 免安裝可攜式瀏覽器專區</span></h2>
-    <div class="grid" id="grid-browser" data-section="browser"></div>
-</section>
-<!-- WEBSPACE -->
-<section class="section section--webspace" id="webspace">
-    <h2 class="section-title">📝 WebSpace<span>檔案名稱與內容紀錄</span></h2>
-    <div class="workspace-panel">
-        <p class="ws-intro">記錄檔案名稱、研究筆記、教學內容、網頁資訊或任何文字資料。</p>
-        <div class="ws-field">
-            <label for="wsFilename">📁 檔案名稱</label>
-            <input type="text" id="wsFilename" placeholder="例如：Aortic_Dissection_20260829.html">
-        </div>
-        <div class="ws-field">
-            <label for="wsContent">📄 內容</label>
-            <textarea id="wsContent" placeholder="在這裡輸入或貼上內容……"></textarea>
-        </div>
-        <div class="ws-buttons">
-            <button type="button" class="ws-save" onclick="wsSaveRecord()">💾 儲存紀錄</button>
-            <button type="button" class="ws-clear" onclick="wsClearForm()">🧹 清除</button>
-        </div>
-        <div class="ws-field ws-search-row">
-            <label for="wsSearch">🔍 搜尋紀錄</label>
-            <input type="text" id="wsSearch" placeholder="搜尋檔案名稱或內容……">
-        </div>
-        <div id="wsRecords" class="ws-records"></div>
-    </div>
-</section>
-<p class="no-results" id="noResults">🔍 找不到符合的網站，請換個關鍵字試試看。</p>
-</main>
-<!-- =========================================================
-     FOOTER
-========================================================= -->
-<footer>
-    <strong>吉米大夫-Delta坐堂常常逛的景點</strong>
-    <br>
-    AI ・ 醫療 ・ 雲端 ・ 生產力 ・ 內容創作 ・ 影音 ・ 瀏覽器
-    <br>
-    © 2026 Jimmy Doctor
-</footer>
-<!-- =========================================================
-     ADD CARD MODAL
-========================================================= -->
-<div class="modal-overlay" id="addModalOverlay">
-    <div class="modal-box">
-        <h3>＋ 新增卡片</h3>
-        <p class="modal-sub">將新的網站或工具加入分類。</p>
-        <form id="addCardForm">
-            <label for="newCardSection">分類</label>
-            <select id="newCardSection">
-                <option value="ai">🤖 AI 人工智慧</option>
-                <option value="tools">🛠️ 開發與臨場工具</option>
-                <option value="med">🏥 醫療・工作・內容</option>
-                <option value="write">✍️ 寫作 AI</option>
-                <option value="media">🎬 影音・社群・學習</option>
-                <option value="browser">🌐 Portable Browser</option>
-            </select>
-            <label for="newCardTitle">名稱</label>
-            <input type="text" id="newCardTitle" placeholder="例如：UpToDate" required>
-            <label for="newCardUrl">網址</label>
-            <input type="text" id="newCardUrl" placeholder="https://..." required>
-            <label for="newCardDesc">描述</label>
-            <textarea id="newCardDesc" placeholder="簡短說明這個網站或工具的用途"></textarea>
-            <label for="newCardIcon">圖示 / 縮寫</label>
-            <input type="text" id="newCardIcon" maxlength="4" placeholder="例如：📌 或 U">
-            <div class="modal-checks">
-                <label><input type="checkbox" id="newCardFeatured"> 精選卡片</label>
-                <label><input type="checkbox" id="newCardExternal" checked> 開新分頁</label>
-            </div>
-            <div class="modal-buttons">
-                <button type="submit" class="modal-save">💾 新增</button>
-                <button type="button" class="modal-cancel" onclick="closeAddModal()">✕ 取消</button>
-            </div>
-        </form>
-    </div>
+  </details>
 </div>
+
+<footer>拖曳排序與新增的網站只存在這個瀏覽器，可用「匯出備份」帶到其他瀏覽器。<br>© 2026 Jimmy Doctor</footer>
+
+<dialog id="dlg">
+  <form method="dialog" id="form">
+    <h3 id="dlgTitle">新增網站</h3>
+    <label for="fTitle">名稱</label><input type="text" id="fTitle" required>
+    <label for="fUrl">網址</label><input type="text" id="fUrl" placeholder="https://" required>
+    <label for="fDesc">說明（選填）</label><input type="text" id="fDesc">
+    <label for="fIcon">圖示（一個符號或字母）</label><input type="text" id="fIcon" maxlength="3" placeholder="📌">
+    <label for="fCat">分類</label><select id="fCat"></select>
+    <label class="chk" style="margin-top:12px"><input type="checkbox" id="fOnly"> 只顯示在目前身分</label>
+    <div class="actions">
+      <button class="btn" type="button" id="fCancel">取消</button>
+      <button class="btn primary" type="submit">儲存</button>
+    </div>
+  </form>
+</dialog>
+
 <script>
 /* =========================================================
-   Clipboard (still used elsewhere; kept for compatibility)
+   Data
 ========================================================= */
-function copyToClipboard(text) {
-    if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(text);
-    } else {
-        const textarea = document.createElement("textarea");
-        textarea.value = text;
-        textarea.style.position = "fixed";
-        textarea.style.opacity = "0";
-        document.body.appendChild(textarea);
-        textarea.focus();
-        textarea.select();
-        document.execCommand("copy");
-        textarea.remove();
-    }
-}
+const PROFILES = [
+  { id:"jimmy",  name:"吉米大夫",     title:"吉米大夫常用網頁",       sub:"AI、醫療、工作與生活的常用入口", color:"#0067b8" },
+  { id:"delta",  name:"載塔駐廠",     title:"載塔駐廠常用網頁",       sub:"廠區臨場服務與日常工具",         color:"#0f766e" },
+  { id:"cgu",    name:"我的對的學堂", title:"我的對的學堂常用網頁",   sub:"教學、研究與學校信箱",           color:"#7c3aed" },
+  { id:"ntsu",   name:"我的好學堂",   title:"我的好學堂常用網頁",     sub:"教學與研究入口",                 color:"#ea580c" },
+  { id:"med",    name:"白房子醫用",   title:"我的白房子醫用常用網頁", sub:"塑膠醫療體系、臨床雲端與醫療資訊", color:"#dc2626" },
+  { id:"admin",  name:"白房子行政",   title:"我的白房子行政常用網頁", sub:"塑膠醫療體系行政與通訊",         color:"#4338ca" }
+];
+const CATS = [
+  { id:"ai",     name:"AI 人工智慧",   hint:"對話・研究・寫作", icon:"🤖" },
+  { id:"clinic", name:"臨床與健康",    hint:"查證・排班・報備", icon:"🩺" },
+  { id:"cgmh",   name:"塑膠體系",      hint:"雲端・學習・通訊", icon:"🏥" },
+  { id:"mail",   name:"信箱",          hint:"",                 icon:"✉️" },
+  { id:"work",   name:"工作與開發",    hint:"筆記・Office・程式", icon:"🗂️" },
+  { id:"web",    name:"資訊與社群",    hint:"新聞・影音・股市", icon:"🌐" }
+];
+const DEFAULTS = [
+  { id:"chatgpt",  c:"ai", t:"ChatGPT",    d:"寫作、研究、分析、程式設計", u:"https://chatgpt.com/", i:"◎", star:1 },
+  { id:"claude",   c:"ai", t:"Claude",     d:"長文、推理與文件處理", u:"https://claude.ai/", i:"C", star:1 },
+  { id:"grok",     c:"ai", t:"Grok",       d:"即時資訊與推理", u:"https://grok.com/", i:"X" },
+  { id:"gemini",   c:"ai", t:"Gemini",     d:"問答、研究、規劃與學習", u:"https://gemini.google.com/", i:"✦" },
+  { id:"notebook", c:"ai", t:"NotebookLM", d:"用自己的文件做研究與筆記", u:"https://notebooklm.google.com/", i:"▤" },
+  { id:"writeai",  c:"ai", t:"寫作 AI 工具專區", d:"Perplexity、Gamma、Napkin AI、ElevenLabs 等", u:"AITopic/WritingAIPorta.html", i:"✍️" },
+
+  { id:"clintool", c:"clinic", t:"臨床工具集", d:"急診醫學計算機與處置指引", u:"https://cgmherlink-hub.github.io/ClinicalTool/", i:"🩺", star:1 },
+  { id:"report",   c:"clinic", t:"廠區報備",   d:"臨場健康服務與報備資料管理", u:"https://cgmherlink-hub.github.io/ReportData/", i:"📋" },
+  { id:"utd",      c:"clinic", t:"UpToDate",   d:"臨床醫學實證資料庫", u:"https://www.uptodate.com", i:"📚", star:1 },
+  { id:"emyway",   c:"clinic", t:"EmyWay",     d:"大夫行事曆與排班系統", u:"https://emyway.jct.org.tw/calendar/#/fc", i:"📅", star:1 },
+  { id:"dhealth",  c:"clinic", t:"Delta Health Page", d:"健康資訊與醫療資源入口", u:"DeltaHealth.html", i:"❤️" },
+  { id:"vital",    c:"clinic", t:"粒粒生技",   d:"產品介紹與保健資訊", u:"https://sites.google.com/view/vitalgrans/home?authuser=0", i:"🌾" },
+
+  { id:"cloud",    c:"cgmh", t:"塑膠雲端",   d:"塑膠紀念白房子雲端服務", u:"https://cloud.cgmh.org.tw/", i:"🏥", star:1 },
+  { id:"learn",    c:"cgmh", t:"塑膠學習網", d:"數位學習與課程平台", u:"https://llg.cgmh.org.tw/", i:"🎓" },
+  { id:"msg",      c:"cgmh", t:"塑膠即時通", d:"體系內部即時通訊", u:"https://cghmesg.cgmh.org.tw/", i:"💬" },
+
+  { id:"gmail",    c:"mail", t:"Gmail",           d:"Google 電子郵件", u:"https://mail.google.com/mail/u/0/#inbox", i:"✉️", star:1 },
+  { id:"hinet",    c:"mail", t:"Hinet 信箱",      d:"中華電信 Webmail", u:"https://webmail.hinet.net/", i:"📧" },
+  { id:"cgumail",  c:"mail", t:"我的對的學堂信箱", d:"學校電子郵件系統", u:"https://mail01.cgu.edu.tw", i:"📧" },
+
+  { id:"blogger",  c:"work", t:"Blogger",     d:"吉米大夫部落格文章管理", u:"https://www.blogger.com/blog/posts/8498723086197321217", i:"B" },
+  { id:"evernote", c:"work", t:"Evernote",    d:"筆記、任務與知識管理", u:"https://evernote.com/", i:"E" },
+  { id:"office",   c:"work", t:"Microsoft 365", d:"Word、Excel、PowerPoint、Outlook、OneDrive", u:"https://www.office.com/", i:"▦" },
+  { id:"github",   c:"work", t:"GitHub",      d:"個人主頁專案原始碼", u:"https://github.com/DeltaOnDutyDoctor/DrDeltaChenHomePage", i:"🐙" },
+  { id:"browsers", c:"work", t:"Portable Browsers", d:"免安裝可攜式瀏覽器下載", u:"BrowserDownload/PortableBrowserDownload.html", i:"🌐" },
+
+  { id:"fb",       c:"web", t:"Facebook",    d:"貼文、訊息、社團與粉絲專頁", u:"https://www.facebook.com/", i:"f" },
+  { id:"yt",       c:"web", t:"YouTube",     d:"醫學教育、演講與新聞", u:"https://www.youtube.com/", i:"▶" },
+  { id:"yahoo",    c:"web", t:"Yahoo! 奇摩", d:"新聞、氣象與生活資訊", u:"https://tw.yahoo.com/", i:"Y!" },
+  { id:"stock",    c:"web", t:"Yahoo! 股市", d:"台股、美股與財經新聞", u:"https://tw.stock.yahoo.com/", i:"📈" }
+];
+const WS_API_URL = "https://script.google.com/macros/s/AKfycbx-GzQCysu0nQU0V586ihU6q9JuyHnkniND8v5nsNorKQdUOvhHSQNXqxD-rN11lwT-/exec";
+
 /* =========================================================
-   Portal Data
+   State (localStorage, always guarded)
 ========================================================= */
-const PORTAL_STORAGE_KEY = "jimmyPortalCardsData_v2";
-const defaultPortalData = {
-    ai: [
-        { id: "ai-chatgpt", title: "ChatGPT", desc: "AI 人工智慧助理。適合寫作、研究、分析、程式設計與內容創作。", url: "https://chatgpt.com/", icon: "◎", featured: true, external: true },
-        { id: "ai-claude", title: "Claude AI", desc: "Anthropic AI 助理。適合長文、推理、研究與文件處理。", url: "https://claude.ai/", icon: "C", featured: false, external: true },
-        { id: "ai-grok", title: "Grok", desc: "xAI 人工智慧助理。適合即時資訊、推理與內容創作。", url: "https://grok.com/", icon: "X", featured: false, external: true },
-        { id: "ai-gemini", title: "Gemini", desc: "Google AI 助理。適合問答、研究、規劃與學習。", url: "https://gemini.google.com/", icon: "✦", featured: false, external: true },
-        { id: "ai-notebooklm", title: "NotebookLM", desc: "AI 研究與筆記工具。利用自己的文件與資料進行研究。", url: "https://notebooklm.google.com/", icon: "▤", featured: false, external: true },
-        { id: "ai-portal", title: "AI Portal", desc: "AI 工具入口頁。", url: "AIPortal.html", icon: "🗂️", featured: true, external: false }
-    ],
-    tools: [
-        { id: "tools-github", title: "GitHub Repository", desc: "個人主頁專案原始碼與版本控制。", url: "https://github.com/DeltaOnDutyDoctor/DrDeltaChenHomePage", icon: "🐙", featured: false, external: true },
-        { id: "tools-clinical", title: "臨床工具集", desc: "急診與臨床醫療輔助工具入口。", url: "https://cgmherlink-hub.github.io/ClinicalTool/", icon: "🩺", featured: false, external: true },
-        { id: "tools-report", title: "廠區報備", desc: "廠區臨場健康服務與報備資料管理系統。", url: "https://cgmherlink-hub.github.io/ReportData/", icon: "📋", featured: false, external: true }
-    ],
-    med: [
-        { id: "med-cgmh-cloud", title: "塑膠雲端", desc: "塑膠紀念白房子雲端服務入口。", url: "https://cloud.cgmh.org.tw/", icon: "🏥", featured: true, external: true },
-        { id: "med-cgmh-learn", title: "塑膠學習網", desc: "塑膠體系數位學習與課程平台入口。", url: "https://llg.cgmh.org.tw/", icon: "🎓", featured: true, external: true },
-        { id: "med-cgmh-msg", title: "塑膠即時通", desc: "塑膠體系內部即時通訊系統入口。", url: "https://cghmesg.cgmh.org.tw/", icon: "💬", featured: true, external: true },
-        { id: "med-gmail", title: "Gmail", desc: "Google 電子郵件服務。", url: "https://mail.google.com/", icon: "✉️", featured: true, external: true },
-        { id: "med-deltahealth", title: "Delta Health Page", desc: "健康資訊、醫療資源與健康相關工具入口。", url: "DeltaHealth.html", icon: "❤️", featured: false, external: false },
-        { id: "med-vitalgrans", title: "粒粒生技", desc: "粒粒生技官方網站。", url: "https://sites.google.com/view/vitalgrans/home", icon: "🌾", featured: true, external: true },
-        { id: "med-blogger", title: "Blogger", desc: "吉米大夫 Blogger 文章管理與發布入口。", url: "https://www.blogger.com/blog/posts/8498723086197321217", icon: "B", featured: true, external: true },
-        { id: "med-evernote", title: "Evernote", desc: "筆記、文件、任務、行事曆與知識管理工具。", url: "https://evernote.com/", icon: "E", featured: false, external: true },
-        { id: "med-office", title: "Microsoft 365 / Office", desc: "Word、Excel、PowerPoint、Outlook 與 OneDrive。", url: "https://www.office.com/", icon: "▦", featured: false, external: true }
-    ],
-    write: [
-        { id: "write-ai-portal", title: "寫作 AI 工具專區", desc: "醫學教學、寫作、簡報、語音與內容創作 AI 工具整合。", url: "AITopic/WritingAIPorta.html", icon: "✍️", featured: true, external: false }
-    ],
-    media: [
-        { id: "media-fb", title: "Facebook", desc: "社群平台。", url: "https://www.facebook.com/", icon: "f", featured: true, external: true },
-        { id: "media-yt", title: "YouTube", desc: "影音學習、醫學教育、演講與知識分享。", url: "https://www.youtube.com/", icon: "▶", featured: true, external: true },
-        { id: "media-yahoo", title: "Yahoo! 奇摩", desc: "新聞、氣象、搜尋與生活資訊。", url: "https://tw.yahoo.com/", icon: "Y!", featured: false, external: true },
-        { id: "media-stock", title: "Yahoo! 股市", desc: "台股、美股、即時報價、大盤走勢與財經新聞。", url: "https://tw.stock.yahoo.com/", icon: "📈", featured: false, external: true }
-    ],
-    browser: [
-        { id: "browser-portable", title: "Portable Browsers", desc: "Brave、Opera、Firefox、Chrome、Ungoogled Chromium、Waterfox 與 Slimjet。", url: "BrowserDownload/PortableBrowserDownload.html", icon: "🌐", featured: true, external: false }
-    ]
+const KEY = "jimmy_portal_v3";
+const store = {
+  get(k, fb){ try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : fb; } catch(e){ return fb; } },
+  set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
 };
+const clone = o => JSON.parse(JSON.stringify(o));
+const saved = store.get(KEY, null);
+const S = {
+  cards:  saved && Array.isArray(saved.cards) ? saved.cards : clone(DEFAULTS),
+  clicks: saved && saved.clicks ? saved.clicks : {},
+  profile: "jimmy",
+  cat: "",
+  q: "",
+  editing: false,
+  detail: !!store.get("jimmy_portal_detail", false)
+};
+const persist = () => store.set(KEY, { cards:S.cards, clicks:S.clicks });
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+const $ = id => document.getElementById(id);
+const profile = () => PROFILES.find(p => p.id === S.profile) || PROFILES[0];
+
 /* =========================================================
-   Utilities
+   Profiles
 ========================================================= */
-function deepCopy(obj) { return JSON.parse(JSON.stringify(obj)); }
-function uid() { return "c" + Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
-function escapeHTML(str) {
-    const div = document.createElement("div");
-    div.textContent = str == null ? "" : String(str);
-    return div.innerHTML;
+function setProfile(id, push){
+  if (!PROFILES.some(p => p.id === id)) id = "jimmy";
+  S.profile = id;
+  const p = profile();
+  document.documentElement.style.setProperty("--accent", p.color);
+  document.querySelector('meta[name="theme-color"]').content = p.color;
+  document.title = p.title;
+  $("title").textContent = p.title;
+  $("subtitle").textContent = p.sub;
+  store.set("jimmy_portal_profile", id);
+  if (push) history.replaceState(null, "", "#" + id);
+  renderProfiles();
+  render();
 }
-function escapeAttr(str) { return escapeHTML(str).replace(/"/g,"&quot;"); }
+function renderProfiles(){
+  $("profiles").innerHTML = PROFILES.map(p =>
+    `<button style="--c:${p.color}" data-p="${p.id}" aria-pressed="${p.id === S.profile}"><i></i>${esc(p.name)}</button>`
+  ).join("");
+}
+
 /* =========================================================
-   Local Storage
+   Rendering
 ========================================================= */
-function loadPortalData() {
-    try {
-        const raw = localStorage.getItem(PORTAL_STORAGE_KEY);
-        if (raw) {
-            const parsed = JSON.parse(raw);
-            const merged = {};
-            Object.keys(defaultPortalData).forEach(section => {
-                merged[section] = Array.isArray(parsed[section]) ? parsed[section] : deepCopy(defaultPortalData[section]);
-            });
-            return merged;
-        }
-    } catch (error) {
-        console.warn("讀取卡片資料失敗", error);
-    }
-    return deepCopy(defaultPortalData);
+const inProfile = c => !c.only || !c.only.length || c.only.includes(S.profile);
+const matches = (c, q) => !q || (c.t + " " + (c.d||"") + " " + c.u).toLowerCase().includes(q);
+const clickKey = c => S.profile + ":" + c.id;
+
+function tile(c, opts){
+  const n = (opts && opts.badge && S.clicks[clickKey(c)]) || 0;
+  return `<div class="tile" data-id="${esc(c.id)}"${S.editing && !(opts && opts.badge) ? ' draggable="true"' : ''}>
+    <a class="hit" href="${esc(c.u)}" target="_blank" rel="noopener noreferrer" title="${esc(c.d || c.t)}">
+      <span class="ic">${esc(c.i || "🔗")}</span>
+      <span class="tx"><b>${esc(c.t)}</b><small>${esc(c.d)}</small></span>
+      ${n ? `<span class="count">${n}</span>` : ""}
+    </a>
+    ${opts && opts.badge ? "" : `<span class="ed"><button data-act="edit" title="編輯">✏️</button><button data-act="del" title="刪除">🗑️</button></span>`}
+  </div>`;
 }
-function savePortalData() {
-    localStorage.setItem(PORTAL_STORAGE_KEY, JSON.stringify(portalData));
+
+function render(){
+  const q = S.q.trim().toLowerCase();
+  const pool = S.cards.filter(inProfile);
+
+  // category chips with counts
+  $("chips").innerHTML =
+    `<button class="chip" data-cat="" aria-pressed="${S.cat === ""}">全部 ${pool.length}</button>` +
+    CATS.map(k => {
+      const n = pool.filter(c => c.c === k.id).length;
+      return n || S.editing ? `<button class="chip" data-cat="${k.id}" aria-pressed="${S.cat === k.id}">${k.icon} ${k.name} ${n}</button>` : "";
+    }).join("");
+
+  let html = "";
+
+  // most-used row: only on the unfiltered view
+  if (!q && !S.cat){
+    let top = pool.filter(c => S.clicks[clickKey(c)]).sort((a,b) => S.clicks[clickKey(b)] - S.clicks[clickKey(a)]).slice(0, 8);
+    const ranked = top.length > 0;
+    if (!ranked) top = pool.filter(c => c.star).slice(0, 8);
+    if (top.length) html += `<section class="group fav"><h2>⭐ 常用<small>${ranked ? "依點擊次數排序" : "點擊後自動排序"}</small></h2>
+      <div class="grid">${top.map(c => tile(c, { badge:ranked })).join("")}</div></section>`;
+  }
+
+  CATS.forEach(k => {
+    if (S.cat && S.cat !== k.id) return;
+    const list = pool.filter(c => c.c === k.id && matches(c, q));
+    if (!list.length && !(S.editing && !q)) return;
+    html += `<section class="group" id="cat-${k.id}"><h2>${k.icon} ${k.name}${k.hint ? `<small>${k.hint}</small>` : ""}</h2>
+      <div class="grid">${list.map(c => tile(c)).join("")}</div></section>`;
+  });
+
+  if (!html || (q && !pool.some(c => matches(c, q)))) html = `<div class="empty">找不到符合的網站，換個關鍵字試試。</div>`;
+  $("app").innerHTML = html;
 }
-let portalData = loadPortalData();
+
 /* =========================================================
-   Render
+   Interactions
 ========================================================= */
-function renderSection(section) {
-    const grid = document.getElementById("grid-" + section);
-    if (!grid) return;
-    grid.querySelectorAll('.card[data-dynamic="true"]').forEach(el => el.remove());
-    grid.querySelectorAll(".grid-empty").forEach(el => el.remove());
-    const cards = portalData[section] || [];
-    if (cards.length === 0) {
-        const empty = document.createElement("div");
-        empty.className = "grid-empty";
-        empty.textContent = "這個分類還沒有卡片，點擊「＋ 新增卡片」。";
-        grid.appendChild(empty);
-        return;
-    }
-    cards.forEach(card => { grid.appendChild(buildCardEl(section, card)); });
+function countClick(id){
+  const k = S.profile + ":" + id;
+  S.clicks[k] = (S.clicks[k] || 0) + 1;
+  persist();
 }
-function renderAllSections() {
-    Object.keys(defaultPortalData).forEach(renderSection);
-}
-/* =========================================================
-   Build Card
-========================================================= */
-function buildCardEl(section, card) {
-    const el = document.createElement("a");
-    el.className = "card" + (card.featured ? " featured" : "");
-    el.href = card.url;
-    if (card.external) { el.target = "_blank"; el.rel = "noopener noreferrer"; }
-    el.dataset.dynamic = "true";
-    el.dataset.id = card.id;
-    el.dataset.section = section;
-    el.draggable = true;
-    el.innerHTML = `
-        <div class="card-controls">
-            <button type="button" class="ctrl-btn ctrl-edit" title="編輯卡片">✎</button>
-            <button type="button" class="ctrl-btn ctrl-del" title="刪除卡片">🗑</button>
-        </div>
-        <div class="icon">${escapeHTML(card.icon || card.title.charAt(0))}</div>
-        <h3>${escapeHTML(card.title)}</h3>
-        <p>${escapeHTML(card.desc || "")}</p>
-        <span class="arrow">${card.external ? "↗" : "→"}</span>
-    `;
-    el.addEventListener("click", function(e) {
-        if (el.classList.contains("editing")) { e.preventDefault(); return; }
-        if (e.target.closest(".ctrl-btn")) { e.preventDefault(); }
-    });
-    el.querySelector(".ctrl-edit").addEventListener("click", function(e) {
-        e.preventDefault(); e.stopPropagation();
-        enterEditMode(el, section, card);
-    });
-    el.querySelector(".ctrl-del").addEventListener("click", function(e) {
-        e.preventDefault(); e.stopPropagation();
-        deleteCard(section, card.id);
-    });
-    el.addEventListener("dragstart", onCardDragStart);
-    el.addEventListener("dragover", onCardDragOver);
-    el.addEventListener("drop", onCardDrop);
-    el.addEventListener("dragend", onCardDragEnd);
-    return el;
-}
-/* =========================================================
-   Edit Card
-========================================================= */
-function enterEditMode(el, section, card) {
-    el.classList.add("editing");
-    el.draggable = false;
-    el.innerHTML = `
-        <div class="edit-form">
-            <label>圖示 / 縮寫</label>
-            <input type="text" class="ef-icon" maxlength="4" value="${escapeAttr(card.icon || "")}">
-            <label>名稱</label>
-            <input type="text" class="ef-title" value="${escapeAttr(card.title)}">
-            <label>描述</label>
-            <textarea class="ef-desc">${escapeHTML(card.desc || "")}</textarea>
-            <label>網址</label>
-            <input type="text" class="ef-url" value="${escapeAttr(card.url)}">
-            <label class="ef-check"><input type="checkbox" class="ef-featured" ${card.featured ? "checked" : ""}> 精選卡片</label>
-            <label class="ef-check"><input type="checkbox" class="ef-external" ${card.external !== false ? "checked" : ""}> 開新分頁</label>
-            <div class="ef-buttons">
-                <button type="button" class="ef-save">💾 儲存</button>
-                <button type="button" class="ef-cancel">✕ 取消</button>
-            </div>
-        </div>
-    `;
-    el.querySelector(".ef-save").addEventListener("click", function(e) {
-        e.preventDefault();
-        const title = el.querySelector(".ef-title").value.trim();
-        const url = el.querySelector(".ef-url").value.trim();
-        if (!title || !url) { alert("請輸入名稱與網址！"); return; }
-        card.title = title;
-        card.url = url;
-        card.desc = el.querySelector(".ef-desc").value.trim();
-        card.icon = el.querySelector(".ef-icon").value.trim();
-        card.featured = el.querySelector(".ef-featured").checked;
-        card.external = el.querySelector(".ef-external").checked;
-        savePortalData();
-        renderSection(section);
-    });
-    el.querySelector(".ef-cancel").addEventListener("click", function() { renderSection(section); });
-}
-/* =========================================================
-   Delete Card
-========================================================= */
-function deleteCard(section, id) {
-    if (!confirm("確定要刪除這張卡片嗎？")) return;
-    portalData[section] = (portalData[section] || []).filter(card => card.id !== id);
-    savePortalData();
-    renderSection(section);
-}
-/* =========================================================
-   Add Modal
-========================================================= */
-function openAddModal() {
-    document.getElementById("addModalOverlay").classList.add("open");
-    document.getElementById("newCardTitle").focus();
-}
-function closeAddModal() {
-    document.getElementById("addModalOverlay").classList.remove("open");
-    document.getElementById("addCardForm").reset();
-}
-document.getElementById("addCardForm").addEventListener("submit", function(e) {
+
+$("app").addEventListener("click", e => {
+  const tileEl = e.target.closest(".tile");
+  if (!tileEl) return;
+  const id = tileEl.dataset.id;
+  const act = e.target.closest("[data-act]");
+  if (act){
     e.preventDefault();
-    submitAddCard();
+    if (act.dataset.act === "edit") openDialog(id);
+    if (act.dataset.act === "del" && confirm("確定要刪除這個網站嗎？")){
+      S.cards = S.cards.filter(c => c.id !== id); persist(); render();
+    }
+    return;
+  }
+  if (S.editing){ e.preventDefault(); return; }
+  if (e.target.closest(".hit")) countClick(id);   // re-rank on next render
 });
-function submitAddCard() {
-    const section = document.getElementById("newCardSection").value;
-    const title = document.getElementById("newCardTitle").value.trim();
-    const url = document.getElementById("newCardUrl").value.trim();
-    const desc = document.getElementById("newCardDesc").value.trim();
-    const icon = document.getElementById("newCardIcon").value.trim();
-    const featured = document.getElementById("newCardFeatured").checked;
-    const external = document.getElementById("newCardExternal").checked;
-    if (!title || !url) { alert("請輸入名稱與網址！"); return; }
-    if (!portalData[section]) { portalData[section] = []; }
-    portalData[section].push({
-        id: uid(), title: title, url: url, desc: desc,
-        icon: icon || title.charAt(0), featured: featured, external: external
-    });
-    savePortalData();
-    renderSection(section);
-    closeAddModal();
-}
-/* =========================================================
-   Modal Events
-========================================================= */
-document.getElementById("addModalOverlay").addEventListener("click", function(e) {
-    if (e.target.id === "addModalOverlay") { closeAddModal(); }
+$("app").addEventListener("auxclick", e => {
+  const t = e.target.closest(".tile");
+  if (t && !S.editing && e.button === 1) countClick(t.dataset.id);
 });
-document.addEventListener("keydown", function(e) {
-    if (e.key === "Escape" && document.getElementById("addModalOverlay").classList.contains("open")) {
-        closeAddModal();
-    }
+
+/* drag & drop (edit mode only) */
+let dragId = null;
+$("app").addEventListener("dragstart", e => { const t = e.target.closest(".tile"); if (t){ dragId = t.dataset.id; e.dataTransfer.effectAllowed = "move"; } });
+$("app").addEventListener("dragover", e => { const t = e.target.closest(".tile"); if (t && dragId){ e.preventDefault(); t.classList.add("over"); } });
+$("app").addEventListener("dragleave", e => { const t = e.target.closest(".tile"); if (t) t.classList.remove("over"); });
+$("app").addEventListener("drop", e => {
+  e.preventDefault();
+  const t = e.target.closest(".tile"), g = e.target.closest(".group");
+  if (!dragId) return;
+  const from = S.cards.findIndex(c => c.id === dragId);
+  const moving = S.cards.splice(from, 1)[0];
+  if (t && t.dataset.id !== dragId){
+    const to = S.cards.findIndex(c => c.id === t.dataset.id);
+    moving.c = S.cards[to].c;
+    S.cards.splice(to, 0, moving);
+  } else if (g && g.id.startsWith("cat-")){          // dropped on an empty area of a category
+    moving.c = g.id.slice(4);
+    S.cards.push(moving);
+  } else {
+    S.cards.splice(from, 0, moving);
+  }
+  dragId = null; persist(); render();
 });
-/* =========================================================
-   Restore Defaults
-========================================================= */
-function restoreDefaults() {
-    if (!confirm("確定要還原所有卡片為預設值嗎？\n\n新增、修改與排序都會被清除。")) return;
-    localStorage.removeItem(PORTAL_STORAGE_KEY);
-    portalData = deepCopy(defaultPortalData);
-    renderAllSections();
-    alert("✅ 已還原預設卡片");
+$("app").addEventListener("dragend", () => { dragId = null; render(); });
+
+$("profiles").addEventListener("click", e => { const b = e.target.closest("[data-p]"); if (b) setProfile(b.dataset.p, true); });
+$("chips").addEventListener("click", e => {
+  const b = e.target.closest("[data-cat]"); if (!b) return;
+  S.cat = (S.cat === b.dataset.cat) ? "" : b.dataset.cat; render();
+});
+
+$("q").addEventListener("input", e => { S.q = e.target.value; render(); });
+$("q").addEventListener("keydown", e => {
+  if (e.key === "Enter"){
+    const a = document.querySelector("#app .group:not(.fav) .hit") || document.querySelector("#app .hit");
+    if (a && S.q.trim()){ countClick(a.closest(".tile").dataset.id); window.open(a.href, "_blank", "noopener"); }
+  }
+  if (e.key === "Escape"){ e.target.value = ""; S.q = ""; render(); e.target.blur(); }
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "/" && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){ e.preventDefault(); $("q").focus(); }
+});
+
+$("detailBtn").addEventListener("click", () => {
+  S.detail = !S.detail; store.set("jimmy_portal_detail", S.detail);
+  document.body.classList.toggle("detail", S.detail);
+  $("detailBtn").setAttribute("aria-pressed", S.detail);
+});
+$("editBtn").addEventListener("click", () => {
+  S.editing = !S.editing;
+  document.body.classList.toggle("editing", S.editing);
+  $("editBtn").setAttribute("aria-pressed", S.editing);
+  $("editTools").style.display = S.editing ? "flex" : "none";
+  render();
+});
+$("editTools").style.display = "none";
+
+/* ---- add / edit dialog ---- */
+let editingId = null;
+$("fCat").innerHTML = CATS.map(k => `<option value="${k.id}">${k.icon} ${k.name}</option>`).join("");
+function openDialog(id){
+  editingId = id || null;
+  const c = id ? S.cards.find(x => x.id === id) : null;
+  $("dlgTitle").textContent = c ? "編輯網站" : "新增網站";
+  $("fTitle").value = c ? c.t : "";
+  $("fUrl").value   = c ? c.u : "";
+  $("fDesc").value  = c ? (c.d || "") : "";
+  $("fIcon").value  = c ? (c.i || "") : "";
+  $("fCat").value   = c ? c.c : (S.cat || "work");
+  $("fOnly").checked = c ? !!(c.only && c.only.length) : false;
+  $("dlg").showModal();
 }
-/* =========================================================
-   Drag & Drop
-========================================================= */
-let dragSrcEl = null;
-function onCardDragStart(e) {
-    dragSrcEl = this;
-    this.classList.add("dragging");
-    e.dataTransfer.effectAllowed = "move";
-    try { e.dataTransfer.setData("text/plain", this.dataset.id); } catch (error) {}
-}
-function onCardDragOver(e) {
-    if (!dragSrcEl || this === dragSrcEl) return;
-    if (this.dataset.section !== dragSrcEl.dataset.section) return;
-    e.preventDefault();
-    const grid = this.parentElement;
-    const rect = this.getBoundingClientRect();
-    const after = e.clientX - rect.left > rect.width / 2;
-    grid.insertBefore(dragSrcEl, after ? this.nextSibling : this);
-}
-function onCardDrop(e) { e.preventDefault(); e.stopPropagation(); }
-function onCardDragEnd() {
-    if (!dragSrcEl) return;
-    dragSrcEl.classList.remove("dragging");
-    dragSrcEl.draggable = true;
-    const section = dragSrcEl.dataset.section;
-    const grid = document.getElementById("grid-" + section);
-    const newOrder = Array.from(grid.querySelectorAll('.card[data-dynamic="true"]')).map(el => el.dataset.id);
-    portalData[section].sort((a,b) => newOrder.indexOf(a.id) - newOrder.indexOf(b.id));
-    savePortalData();
-    dragSrcEl = null;
-}
-/* =========================================================
-   Search
-========================================================= */
-function filterCards() {
-    const input = document.getElementById("search").value.trim().toLowerCase();
-    const sections = document.querySelectorAll(".section");
-    let anyVisible = false;
-    sections.forEach(section => {
-        const cards = section.querySelectorAll(".card");
-        let sectionHasMatch = false;
-        cards.forEach(card => {
-            const text = card.innerText.toLowerCase();
-            const match = text.includes(input);
-            card.style.display = match ? "" : "none";
-            if (match) { sectionHasMatch = true; anyVisible = true; }
-        });
-        section.style.display = sectionHasMatch ? "" : "none";
-    });
-    document.getElementById("noResults").style.display = anyVisible ? "none" : "block";
-}
-document.getElementById("search").addEventListener("input", filterCards);
-/* =========================================================
-   WebSpace
-   Google Apps Script Web App
-========================================================= */
-const WS_API_URL =
-"https://script.google.com/macros/s/AKfycbx-GzQCysu0nQU0V586ihU6q9JuyHnkniND8v5nsNorKQdUOvhHSQNXqxD-rN11lwT-/exec";
-let wsRecordsCache = [];
-let wsLoading = false;
-async function wsFetchRecords() {
-    const response = await fetch(WS_API_URL + "?action=list");
-    const data = await response.json();
-    if (!data.success) { throw new Error(data.error || "讀取失敗"); }
-    return data.records || [];
-}
-async function wsPostAdd(filename, content) {
-    const response = await fetch(WS_API_URL, {
-        method: "POST",
-        body: JSON.stringify({ action: "add", filename, content })
-    });
-    const data = await response.json();
-    if (!data.success) { throw new Error(data.error || "新增失敗"); }
-    return data.record;
-}
-async function wsPostDelete(id) {
-    const response = await fetch(WS_API_URL, {
-        method: "POST",
-        body: JSON.stringify({ action: "delete", id })
-    });
-    const data = await response.json();
-    if (!data.success) { throw new Error(data.error || "刪除失敗"); }
-}
-/* =========================================================
-   Save WebSpace
-========================================================= */
-async function wsSaveRecord() {
-    const filename = document.getElementById("wsFilename").value.trim();
-    const content = document.getElementById("wsContent").value.trim();
-    if (!filename) { alert("請輸入檔案名稱！"); return; }
-    if (!content) { alert("請輸入內容！"); return; }
-    const btn = document.querySelector(".ws-save");
-    const originalText = btn.textContent;
-    btn.disabled = true;
-    btn.textContent = "💾 儲存中…";
+$("addBtn").addEventListener("click", () => openDialog());
+$("fCancel").addEventListener("click", () => $("dlg").close());
+$("form").addEventListener("submit", e => {
+  e.preventDefault();
+  let url = $("fUrl").value.trim();
+  if (!/:\/\//.test(url) && !/\.html?$/i.test(url)) url = "https://" + url;
+  const data = {
+    t: $("fTitle").value.trim(), u: url, d: $("fDesc").value.trim(),
+    i: $("fIcon").value.trim() || "📌", c: $("fCat").value,
+    only: $("fOnly").checked ? [S.profile] : []
+  };
+  if (editingId) Object.assign(S.cards.find(c => c.id === editingId), data);
+  else S.cards.push({ id: "u" + Date.now(), ...data });
+  persist(); $("dlg").close(); render();
+});
+
+/* ---- reset / backup ---- */
+$("resetBtn").addEventListener("click", () => {
+  if (!confirm("還原預設網站清單？你新增與排序的內容會被清除，點擊紀錄會保留。")) return;
+  S.cards = clone(DEFAULTS); persist(); render();
+});
+$("exportBtn").addEventListener("click", () => {
+  const blob = new Blob([JSON.stringify({ cards:S.cards, clicks:S.clicks }, null, 2)], { type:"application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob); a.download = "jimmy-portal-backup.json"; a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+});
+$("importBtn").addEventListener("click", () => $("importFile").click());
+$("importFile").addEventListener("change", e => {
+  const f = e.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = () => {
     try {
-        await wsPostAdd(filename, content);
-        wsClearForm();
-        await wsDisplayRecords();
-    } catch (error) {
-        alert("⚠️ 儲存失敗：" + error.message);
-    } finally {
-        btn.disabled = false;
-        btn.textContent = originalText;
-    }
-}
+      const d = JSON.parse(r.result);
+      if (!Array.isArray(d.cards) || !d.cards.every(c => c.id && c.t && c.u && c.c)) throw new Error("格式不符");
+      S.cards = d.cards; S.clicks = d.clicks || {}; persist(); render();
+    } catch(err){ alert("匯入失敗：" + err.message); }
+    e.target.value = "";
+  };
+  r.readAsText(f);
+});
+
 /* =========================================================
-   Clear
+   WebSpace (Google Sheet via Apps Script) — loads on first open
 ========================================================= */
-function wsClearForm() {
-    document.getElementById("wsFilename").value = "";
-    document.getElementById("wsContent").value = "";
+let wsCache = [], wsLoaded = false;
+async function wsCall(opts, query){
+  const res = await fetch(WS_API_URL + (query || ""), opts);
+  const data = await res.json();
+  if (!data.success) throw new Error(data.error || "操作失敗");
+  return data;
 }
-/* =========================================================
-   Delete WebSpace Record
-========================================================= */
-async function wsDeleteRecord(id) {
-    if (!confirm("確定要刪除這筆紀錄嗎？")) return;
-    try {
-        await wsPostDelete(id);
-        await wsDisplayRecords();
-    } catch (error) {
-        alert("⚠️ 刪除失敗：" + error.message);
-    }
+async function wsLoad(){
+  $("wsList").innerHTML = `<p class="note">讀取中…</p>`;
+  try { wsCache = (await wsCall({}, "?action=list")).records; wsLoaded = true; wsRender(); }
+  catch(err){ $("wsList").innerHTML = `<p class="note">無法連線至 Google Sheet：${esc(err.message)}</p>`; }
 }
-/* =========================================================
-   WebSpace Escape
-========================================================= */
-function wsEscapeHTML(text) {
-    const div = document.createElement("div");
-    div.textContent = text == null ? "" : String(text);
-    return div.innerHTML;
+function wsRender(){
+  const s = $("wsFind").value.trim().toLowerCase();
+  const list = wsCache.filter(r => (r.filename + " " + r.content).toLowerCase().includes(s));
+  $("wsList").innerHTML = list.length ? list.map(r => `
+    <div class="rec"><div class="rec-h"><div><b>📁 ${esc(r.filename)}</b><small>${esc(r.date)}</small></div>
+    <button data-del="${esc(r.id)}">刪除</button></div><pre>${esc(r.content)}</pre></div>`).join("")
+    : `<p class="note">目前沒有紀錄。</p>`;
 }
+$("ws").addEventListener("toggle", () => { if ($("ws").open && !wsLoaded) wsLoad(); });
+$("wsFind").addEventListener("input", wsRender);
+$("wsClear").addEventListener("click", () => { $("wsName").value = ""; $("wsText").value = ""; });
+$("wsSave").addEventListener("click", async () => {
+  const filename = $("wsName").value.trim(), content = $("wsText").value.trim();
+  if (!filename || !content){ alert("請輸入檔案名稱與內容。"); return; }
+  const b = $("wsSave"); b.disabled = true; b.textContent = "儲存中…";
+  try {
+    await wsCall({ method:"POST", body:JSON.stringify({ action:"add", filename, content }) });
+    $("wsName").value = ""; $("wsText").value = ""; await wsLoad();
+  } catch(err){ alert("儲存失敗：" + err.message); }
+  b.disabled = false; b.textContent = "儲存紀錄";
+});
+$("wsList").addEventListener("click", async e => {
+  const id = e.target.dataset.del;
+  if (!id || !confirm("確定要刪除這筆紀錄嗎？")) return;
+  try { await wsCall({ method:"POST", body:JSON.stringify({ action:"delete", id }) }); await wsLoad(); }
+  catch(err){ alert("刪除失敗：" + err.message); }
+});
+
 /* =========================================================
-   Display WebSpace Records
+   Boot — #delta, #cgu … deep-link straight to a profile
 ========================================================= */
-async function wsDisplayRecords() {
-    const container = document.getElementById("wsRecords");
-    if (wsLoading) return;
-    wsLoading = true;
-    container.innerHTML = '<div class="ws-empty">⏳ 讀取中…</div>';
-    try {
-        wsRecordsCache = await wsFetchRecords();
-    } catch (error) {
-        container.innerHTML = '<div class="ws-empty">⚠️ 無法連線至 Google Sheet：' + wsEscapeHTML(error.message) + '</div>';
-        wsLoading = false;
-        return;
-    }
-    wsLoading = false;
-    wsRenderRecords();
-}
-/* =========================================================
-   Render WebSpace
-========================================================= */
-function wsRenderRecords() {
-    const container = document.getElementById("wsRecords");
-    const search = document.getElementById("wsSearch").value.trim().toLowerCase();
-    const filtered = wsRecordsCache.filter(record => {
-        const filename = String(record.filename || "").toLowerCase();
-        const content = String(record.content || "").toLowerCase();
-        return filename.includes(search) || content.includes(search);
-    });
-    if (filtered.length === 0) {
-        container.innerHTML = '<div class="ws-empty">📭 目前沒有紀錄</div>';
-        return;
-    }
-    container.innerHTML = filtered.map(record => `
-        <div class="ws-record">
-            <div class="ws-record-header">
-                <div>
-                    <div class="ws-filename">📁 ${wsEscapeHTML(record.filename)}</div>
-                    <div class="ws-date">${wsEscapeHTML(record.date || "")}</div>
-                </div>
-                <button type="button" class="ws-delete" onclick="wsDeleteRecord('${String(record.id).replace(/'/g,"\\'")}')">🗑 刪除</button>
-            </div>
-            <div class="ws-record-content">${wsEscapeHTML(record.content)}</div>
-        </div>
-    `).join("");
-}
-document.getElementById("wsSearch").addEventListener("input", wsRenderRecords);
-/* =========================================================
-   Initialize
-========================================================= */
-renderAllSections();
-wsDisplayRecords();
-</script>
-</div></div>
-<script>
-/* ============== Sidebar + Most-Used (added) ============== */
-(function(){
-  function buildSidebarTabs(){
-    var src = document.querySelectorAll(".tabs-nav a.tab-btn");
-    var target = document.getElementById("sidebarTabs");
-    if (!target || !src.length) return;
-    target.innerHTML = "";
-    src.forEach(function(a){
-      var link = document.createElement("a");
-      link.href = a.getAttribute("href");
-      link.textContent = a.textContent;
-      if (a.classList.contains("active")) link.classList.add("active");
-      target.appendChild(link);
-    });
-  }
-
-  function buildSidebarSections(){
-    var target = document.getElementById("sidebarSections");
-    if (!target) return;
-    target.innerHTML = "";
-    var items = [];
-    document.querySelectorAll("main > section").forEach(function(sec, i){
-      if (sec.id === "mostused-section") return;
-      var titleEl = sec.querySelector(".section-title");
-      if (!titleEl) return;
-      var label = (titleEl.childNodes[0] ? titleEl.childNodes[0].textContent : titleEl.textContent).trim();
-      if (!label) return;
-      if (!sec.id) sec.id = "sec-" + i;
-      items.push({ id: sec.id, label: label });
-    });
-    if (items.length) {
-      items.forEach(function(it){
-        var a = document.createElement("a");
-        a.href = "#" + it.id;
-        a.textContent = it.label;
-        target.appendChild(a);
-      });
-      return;
-    }
-    var cats = [];
-    document.querySelectorAll("[data-meta]").forEach(function(el){
-      var m = el.dataset.meta;
-      if (m && cats.indexOf(m) === -1) cats.push(m);
-    });
-    if (cats.length) {
-      var clearA = document.createElement("a");
-      clearA.href = "#";
-      clearA.textContent = "— 顯示全部 —";
-      clearA.style.opacity = "0.75";
-      clearA.addEventListener("click", function(e){
-        e.preventDefault();
-        var search = document.getElementById("search");
-        if (search) { search.value = ""; if (typeof window.filterCards === "function") window.filterCards(); }
-      });
-      target.appendChild(clearA);
-    }
-    cats.forEach(function(cat){
-      var a = document.createElement("a");
-      a.href = "#";
-      a.textContent = "🏷 " + cat;
-      a.addEventListener("click", function(e){
-        e.preventDefault();
-        var search = document.getElementById("search");
-        if (search) { search.value = cat; if (typeof window.filterCards === "function") window.filterCards(); }
-        var grid = document.getElementById("cardGrid");
-        if (grid) grid.scrollIntoView({ behavior: "smooth", block: "start" });
-      });
-      target.appendChild(a);
-    });
-  }
-
-  function setupToggle(){
-    var btn = document.getElementById("sidebarToggle");
-    var sidebar = document.getElementById("appSidebar");
-    var backdrop = document.getElementById("sidebarBackdrop");
-    if (!btn || !sidebar) return;
-    function closeSidebar(){ sidebar.classList.remove("open"); if (backdrop) backdrop.classList.remove("show"); }
-    btn.addEventListener("click", function(){
-      sidebar.classList.toggle("open");
-      if (backdrop) backdrop.classList.toggle("show");
-    });
-    if (backdrop) backdrop.addEventListener("click", closeSidebar);
-    sidebar.querySelectorAll("a").forEach(function(a){
-      a.addEventListener("click", function(){ if (window.innerWidth <= 960) closeSidebar(); });
-    });
-  }
-
-  var PAGE_KEY = (location.pathname.split("/").pop() || "index.html").replace(/\.html$/, "") || "index";
-  var CLICK_KEY = "jimmyMostUsedClicks_v1_" + PAGE_KEY;
-  function loadClicks(){ try { return JSON.parse(localStorage.getItem(CLICK_KEY) || "{}"); } catch(e){ return {}; } }
-  function saveClicks(c){ try { localStorage.setItem(CLICK_KEY, JSON.stringify(c)); } catch(e){} }
-  var clicks = loadClicks();
-  var mostUsedSection, mostUsedGrid, mostUsedHint;
-
-  function isTrackable(a){
-    if (a.closest("#mostused-section")) return false;
-    if (a.closest("#appSidebar")) return false;
-    var href = a.getAttribute("href") || "";
-    if (!href || href.charAt(0) === "#" || href.indexOf("javascript:") === 0) return false;
-    return true;
-  }
-  function isControlClick(e){
-    return !!e.target.closest(".ctrl-btn,.card-controls,.edit-form,.action-btn,.card-actions,.ws-save,.ws-clear,.ws-delete,.pc-btn");
-  }
-  function displayCardFor(a){ return a.closest(".card") || a; }
-
-  function attachTracking(){
-    document.querySelectorAll("main a[href]").forEach(function(a){
-      if (!isTrackable(a)) return;
-      if (a.dataset.muBound) return;
-      a.dataset.muBound = "1";
-      a.addEventListener("click", function(e){
-        if (a.classList.contains("editing")) return;
-        if (isControlClick(e)) return;
-        var key = a.getAttribute("href");
-        clicks[key] = (clicks[key] || 0) + 1;
-        saveClicks(clicks);
-        scheduleRefresh();
-      });
-    });
-  }
-
-  function collectCandidates(){
-    var map = new Map();
-    document.querySelectorAll("main a[href]").forEach(function(a){
-      if (!isTrackable(a)) return;
-      var key = a.getAttribute("href");
-      if (!map.has(key)) map.set(key, displayCardFor(a));
-    });
-    return map;
-  }
-
-  function cleanClone(node){
-    var clone = node.cloneNode(true);
-    clone.removeAttribute("draggable");
-    clone.querySelectorAll(".card-actions,.card-controls,.ctrl-btn,.edit-form,.action-btn").forEach(function(el){ el.remove(); });
-    clone.classList.add("mostused-clone");
-    return clone;
-  }
-
-  function renderMostUsed(){
-    if (!mostUsedGrid) return;
-    var map = collectCandidates();
-    var entries = Array.from(map.entries()).map(function(pair){
-      return { key: pair[0], el: pair[1], count: clicks[pair[0]] || 0 };
-    });
-    var ranked = entries.filter(function(e){ return e.count > 0; }).sort(function(a,b){ return b.count - a.count; }).slice(0, 8);
-    var usingFallback = false;
-    if (!ranked.length) {
-      ranked = entries.filter(function(e){ return e.el.classList.contains("featured"); }).slice(0, 6);
-      usingFallback = true;
-    }
-    if (!ranked.length) { ranked = entries.slice(0, 6); usingFallback = true; }
-    mostUsedGrid.innerHTML = "";
-    if (!ranked.length) { if (mostUsedSection) mostUsedSection.style.display = "none"; return; }
-    if (mostUsedSection) mostUsedSection.style.display = "";
-    ranked.forEach(function(e){
-      var clone = cleanClone(e.el);
-      if (e.count > 0) {
-        var badge = document.createElement("span");
-        badge.className = "mostused-badge";
-        badge.textContent = "🔥 " + e.count;
-        clone.appendChild(badge);
-      }
-      clone.addEventListener("click", function(){
-        clicks[e.key] = (clicks[e.key] || 0) + 1;
-        saveClicks(clicks);
-      });
-      mostUsedGrid.appendChild(clone);
-    });
-    if (mostUsedHint) mostUsedHint.style.display = usingFallback ? "" : "none";
-  }
-
-  var refreshTimer = null;
-  function scheduleRefresh(){
-    if (refreshTimer) return;
-    refreshTimer = setTimeout(function(){
-      refreshTimer = null;
-      attachTracking();
-      renderMostUsed();
-    }, 150);
-  }
-
-  function setupObserver(){
-    var main = document.querySelector("main");
-    if (!main) return;
-    var obs = new MutationObserver(function(mutations){
-      var relevant = mutations.some(function(m){ return !(mostUsedSection && mostUsedSection.contains(m.target)); });
-      if (relevant) scheduleRefresh();
-    });
-    obs.observe(main, { childList: true, subtree: true });
-  }
-
-  function init(){
-    mostUsedSection = document.getElementById("mostused-section");
-    mostUsedGrid = document.getElementById("grid-mostused");
-    mostUsedHint = document.getElementById("mostused-hint");
-    buildSidebarTabs();
-    buildSidebarSections();
-    setupToggle();
-    attachTracking();
-    renderMostUsed();
-    setupObserver();
-  }
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
-  else init();
-})();
+document.body.classList.toggle("detail", S.detail);
+$("detailBtn").setAttribute("aria-pressed", S.detail);
+const startId = (location.hash || "").slice(1) || store.get("jimmy_portal_profile", "jimmy");
+setProfile(startId, false);
+window.addEventListener("hashchange", () => setProfile((location.hash || "").slice(1), false));
 </script>
 </body>
 </html>
