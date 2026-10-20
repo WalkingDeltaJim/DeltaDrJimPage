@@ -257,6 +257,7 @@ const DEFAULTS = [
   { id:"office",   c:"work", t:"Microsoft 365", d:"Word、Excel、PowerPoint、Outlook、OneDrive", u:"https://www.office.com/", i:"▦" },
   { id:"github",   c:"work", t:"GitHub",      d:"個人主頁專案原始碼", u:"https://github.com/DeltaOnDutyDoctor/DrDeltaChenHomePage", i:"🐙" },
   { id:"browsers", c:"work", t:"Portable Browsers", d:"免安裝可攜式瀏覽器下載", u:"BrowserDownload/PortableBrowserDownload.html", i:"🌐" },
+  { id:"wayground", c:"work", t:"Wayground", d:"互動式測驗與課堂教學平台（管理探索頁）", u:"https://wayground.com/explore/admin", i:"🎯" },
 
   { id:"fb",       c:"web", t:"Facebook",    d:"貼文、訊息、社團與粉絲專頁", u:"https://www.facebook.com/", i:"f" },
   { id:"yt",       c:"web", t:"YouTube",     d:"醫學教育、演講與新聞", u:"https://www.youtube.com/", i:"▶" },
@@ -275,8 +276,12 @@ const store = {
 };
 const clone = o => JSON.parse(JSON.stringify(o));
 const saved = store.get(KEY, null);
+/* Newly added default sites are appended to existing saved lists once (deleted ones stay deleted). */
+const seen = new Set(saved && saved.seen ? saved.seen : DEFAULTS.map(c => c.id).filter(id => id !== "wayground"));
+const initialCards = saved && Array.isArray(saved.cards) ? saved.cards : clone(DEFAULTS);
+if (saved) DEFAULTS.forEach(d => { if (!seen.has(d.id) && !initialCards.some(c => c.id === d.id)) initialCards.push(clone(d)); });
 const S = {
-  cards:  saved && Array.isArray(saved.cards) ? saved.cards : clone(DEFAULTS),
+  cards:  initialCards,
   clicks: saved && saved.clicks ? saved.clicks : {},
   profile: "jimmy",
   cat: "",
@@ -284,7 +289,7 @@ const S = {
   editing: false,
   detail: !!store.get("jimmy_portal_detail", false)
 };
-const persist = () => store.set(KEY, { cards:S.cards, clicks:S.clicks });
+const persist = () => store.set(KEY, { cards:S.cards, clicks:S.clicks, seen:DEFAULTS.map(c => c.id) });
 const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
 const $ = id => document.getElementById(id);
 const profile = () => PROFILES.find(p => p.id === S.profile) || PROFILES[0];
