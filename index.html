@@ -89,6 +89,12 @@ body.editing .ed{display:flex}
 .ed button:hover{background:var(--accent-soft)}
 body.editing .tile{cursor:grab;border-style:dashed}
 body.editing .tile.over{border-color:var(--accent);background:var(--accent-soft)}
+.openall{margin-top:6px;padding:3px 10px;border-radius:999px;border:1px solid var(--accent);background:transparent;
+  color:var(--accent);font-size:12.5px;font-weight:600;cursor:pointer;display:block}
+.openall:hover{background:var(--accent);color:#fff}
+.group h2 .openall{margin-top:0}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--ink);color:var(--bg);
+  padding:9px 16px;border-radius:999px;font-size:13.5px;z-index:50;max-width:92vw}
 .empty{padding:50px 0;text-align:center;color:var(--soft)}
 
 /* ---------- WebSpace ---------- */
@@ -159,6 +165,7 @@ dialog .actions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
         <input id="q" type="search" placeholder="搜尋網站，按 Enter 直接開啟第一個結果" autocomplete="off">
         <kbd>/</kbd>
       </div>
+      <button class="tool" id="bgBtn" aria-pressed="true" title="開啟網站時留在本頁（在背景分頁開啟）">⤵<span class="lbl"> 背景開啟</span></button>
       <button class="tool" id="detailBtn" aria-pressed="false" title="顯示或隱藏說明">☰<span class="lbl"> 說明</span></button>
       <button class="tool" id="editBtn" aria-pressed="false" title="編輯、排序、新增">✏️<span class="lbl"> 編輯</span></button>
     </div>
@@ -241,6 +248,7 @@ const DEFAULTS = [
   { id:"report",   c:"clinic", t:"廠區報備",   d:"臨場健康服務與報備資料管理", u:"https://cgmherlink-hub.github.io/ReportData/", i:"📋" },
   { id:"utd",      c:"clinic", t:"UpToDate",   d:"臨床醫學實證資料庫", u:"https://www.uptodate.com", i:"📚", star:1 },
   { id:"emyway",   c:"clinic", t:"EmyWay",     d:"大夫行事曆與排班系統", u:"https://emyway.jct.org.tw/calendar/#/fc", i:"📅", star:1 },
+  { id:"clinicalkey", c:"clinic", t:"ClinicalKey", d:"臨床醫學資料庫・登入帳號為信箱（email）", u:"https://www.clinicalkey.com/#!/", i:"🔑" },
   { id:"dhealth",  c:"clinic", t:"Delta Health Page", d:"健康資訊與醫療資源入口", u:"DeltaHealth.html", i:"❤️" },
   { id:"vital",    c:"clinic", t:"粒粒生技",   d:"產品介紹與保健資訊", u:"https://sites.google.com/view/vitalgrans/home?authuser=0", i:"🌾" },
 
@@ -287,7 +295,8 @@ const S = {
   cat: "",
   q: "",
   editing: false,
-  detail: !!store.get("jimmy_portal_detail", false)
+  detail: !!store.get("jimmy_portal_detail", false),
+  bg: store.get("jimmy_portal_bg", true)
 };
 const persist = () => store.set(KEY, { cards:S.cards, clicks:S.clicks, seen:DEFAULTS.map(c => c.id) });
 const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
@@ -322,6 +331,7 @@ function renderProfiles(){
 ========================================================= */
 const inProfile = c => !c.only || !c.only.length || c.only.includes(S.profile);
 const matches = (c, q) => !q || (c.t + " " + (c.d||"") + " " + c.u).toLowerCase().includes(q);
+const PINNED = ["gmail"];   // always the first entry in the top row
 const clickKey = c => S.profile + ":" + c.id;
 
 function tile(c, opts){
@@ -352,18 +362,21 @@ function render(){
 
   // most-used row: only on the unfiltered view
   if (!q && !S.cat){
-    let top = pool.filter(c => S.clicks[clickKey(c)]).sort((a,b) => S.clicks[clickKey(b)] - S.clicks[clickKey(a)]).slice(0, 8);
+    const pinned = PINNED.map(id => pool.find(c => c.id === id)).filter(Boolean);
+    const rest = pool.filter(c => !PINNED.includes(c.id));
+    let top = rest.filter(c => S.clicks[clickKey(c)]).sort((a,b) => S.clicks[clickKey(b)] - S.clicks[clickKey(a)]);
     const ranked = top.length > 0;
-    if (!ranked) top = pool.filter(c => c.star).slice(0, 8);
-    if (top.length) html += `<section class="group fav"><h2>⭐ 常用<small>${ranked ? "依點擊次數排序" : "點擊後自動排序"}</small></h2>
-      <div class="grid">${top.map(c => tile(c, { badge:ranked })).join("")}</div></section>`;
+    if (!ranked) top = rest.filter(c => c.star);
+    top = pinned.concat(top).slice(0, 8);
+    if (top.length) html += `<section class="group fav"><h2>⭐ 常用<small>Gmail 固定在最前，其餘${ranked ? "依點擊次數排序" : "點擊後自動排序"}</small></h2>
+      <div class="grid">${top.map(c => tile(c, { badge:true })).join("")}</div></section>`;
   }
 
   CATS.forEach(k => {
     if (S.cat && S.cat !== k.id) return;
     const list = pool.filter(c => c.c === k.id && matches(c, q));
     if (!list.length && !(S.editing && !q)) return;
-    html += `<section class="group" id="cat-${k.id}"><h2>${k.icon} ${k.name}${k.hint ? `<small>${k.hint}</small>` : ""}</h2>
+    html += `<section class="group" id="cat-${k.id}"><h2><span>${k.icon} ${k.name}${k.hint ? `<small>${k.hint}</small>` : ""}</span>${k.id === "ai" && list.length ? `<button class="openall" data-openall="ai" title="在背景分頁一次開啟全部 AI 網站">全部開啟 ${list.length}</button>` : ""}</h2>
       <div class="grid">${list.map(c => tile(c)).join("")}</div></section>`;
   });
 
@@ -394,12 +407,40 @@ $("app").addEventListener("click", e => {
     return;
   }
   if (S.editing){ e.preventDefault(); return; }
-  if (e.target.closest(".hit")) countClick(id);   // re-rank on next render
+  const hit = e.target.closest(".hit");
+  if (hit){
+    countClick(id);                                  // re-rank on next render
+    const plain = e.button === 0 && !e.ctrlKey && !e.metaKey && !e.shiftKey && !e.altKey;
+    if (S.bg && plain){ e.preventDefault(); openBg(hit.href); }
+  }
+});
+$("app").addEventListener("click", e => {
+  const b = e.target.closest("[data-openall]"); if (!b || S.editing) return;
+  const list = S.cards.filter(c => inProfile(c) && c.c === b.dataset.openall);
+  list.forEach(c => { countClick(c.id); openBg(new URL(c.u, location.href).href); });
+  toast(`已在背景開啟 ${list.length} 個網站`);
 });
 $("app").addEventListener("auxclick", e => {
   const t = e.target.closest(".tile");
   if (t && !S.editing && e.button === 1) countClick(t.dataset.id);
 });
+
+/* Open in a background tab: a synthetic Ctrl/Cmd+click keeps focus on this page (desktop Chrome, Edge, Firefox). */
+function openBg(url){
+  const a = document.createElement("a");
+  a.href = url; a.target = "_blank"; a.rel = "noopener noreferrer"; a.style.display = "none";
+  document.body.appendChild(a);
+  const mac = /Mac|iPhone|iPad/.test(navigator.platform);
+  a.dispatchEvent(new MouseEvent("click", { bubbles:true, cancelable:true, view:window, ctrlKey:!mac, metaKey:mac }));
+  a.remove();
+}
+let toastTimer;
+function toast(msg){
+  let t = document.querySelector(".toast");
+  if (!t){ t = document.createElement("div"); t.className = "toast"; document.body.appendChild(t); }
+  t.textContent = msg; clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.remove(), 3500);
+}
 
 /* drag & drop (edit mode only) */
 let dragId = null;
@@ -444,6 +485,11 @@ document.addEventListener("keydown", e => {
   if (e.key === "/" && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){ e.preventDefault(); $("q").focus(); }
 });
 
+$("bgBtn").addEventListener("click", () => {
+  S.bg = !S.bg; store.set("jimmy_portal_bg", S.bg);
+  $("bgBtn").setAttribute("aria-pressed", S.bg);
+  toast(S.bg ? "背景開啟：點網站會在背景分頁開啟，畫面留在這裡" : "一般開啟：點網站會直接跳到新分頁");
+});
 $("detailBtn").addEventListener("click", () => {
   S.detail = !S.detail; store.set("jimmy_portal_detail", S.detail);
   document.body.classList.toggle("detail", S.detail);
@@ -563,6 +609,7 @@ $("wsList").addEventListener("click", async e => {
 ========================================================= */
 document.body.classList.toggle("detail", S.detail);
 $("detailBtn").setAttribute("aria-pressed", S.detail);
+$("bgBtn").setAttribute("aria-pressed", S.bg);
 const startId = (location.hash || "").slice(1) || store.get("jimmy_portal_profile", "jimmy");
 setProfile(startId, false);
 window.addEventListener("hashchange", () => setProfile((location.hash || "").slice(1), false));
